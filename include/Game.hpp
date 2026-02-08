@@ -1,29 +1,37 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <random>
+#include <array>
+
 
 #pragma once
 
-class Cell {
-    private:
-    std::vector<Cell> &grid;
-    bool revealed;
-    bool bomb;
-    public:
-    Cell(std::vector<Cell> &grid, bool isBomb);
-    bool getBomb();
-    void Reveal();
+int ptoi(Position coords, int width);
+
+struct Position {
+    int x;
+    int y;
 };
 
-class Game {
+struct Cell {
+    bool revealed = false;
+    bool isBomb = false;
+    int around = 0;
+};
+
+class Game { // Handles grid and connects game to graphics
     private:
-    int width; // Number of cells on X axis
-    int height; // Number of cells on Y axis
-    double bombDensity; // Bombs/Cell percentage
+    int width;
+    int height;
+
+    int bombDensity; // Bombs/Cell percentage (1-100)
+
     std::vector<Cell> grid;
+
     void initializeGame();
+    std::array<Position, 8> GetAround(Position pos); // Get the indices of the positions around given x and y position on grid
 
     public:
     Game();
-    void RevealCell(int row, int col);
+    void RevealCell(Position pos);
 };

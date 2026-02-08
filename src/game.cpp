@@ -7,20 +7,61 @@ Game::Game()
 
 void Game::initializeGame() {
 
-    std::random_device device; // random device from OS
-    std::mt19937 rng(device()); // pseudo random number with Mersenne Twister
-    std::uniform_real_distribution<int> distribution(1, 100);
+    this->grid = std::vector<Cell>(this->width * this->height); // initialize grid with cell structs
 
-    for (int col = 0; col < this->width; col++) {
-        for (int row = 0; row < this->height; row++) {
-            bool isBomb = (distribution(rng) >= this->bombDensity) ? true : false;
-            Cell gridCell(grid, isBomb);
-            this->grid.push_back(gridCell);
+    std::random_device device;
+    std::mt19937 rng(device());
+
+    std::uniform_int_distribution<int> xDist(0, this->width); // x distribution
+    std::uniform_int_distribution<int> yDist(0, this->height); // y distribution
+
+    
+    // Set bombs
+    for (int i = 0; i < (width * height) * (int)(this->bombDensity/100); i++) {
+        Position randCoords = {
+            .x = xDist(rng),
+            .y = yDist(rng),
+        };
+        this->grid[ptoi(randCoords, this->width)].isBomb = true;
+    }
+
+}
+
+void Game::RevealCell(Position pos) {
+    if (this->grid[ptoi(pos, this->width)].isBomb == true) {
+        // u loose screen screen and go back, could play some isBomb audio
+    } else {
+        this->grid[ptoi(pos, this->width)].revealed = true;
+        std::array<Position, 8> around = GetAround(pos);
+        // if theres no bombs around reveal all bombs around pos
+        int bombsAround = 0;  // will have to use this for graphics stuff
+        for (Position arPos : around) {
+            if (this->grid[ptoi(arPos, width)].isBomb == true) bombsAround += 1;
         }
+
+        if (bombsAround == 0) {
+            for (Position ar : around) {
+                RevealCell(ar);
+            }
+        }
+
     }
 }
 
-
-void Cell::Reveal() {
-
+std::array<Position, 8> Game::GetAround(Position pos) {
+    std::array<Position, 8> around;
+    int i = 0;
+    for (int yOffset = -1; yOffset <= 1; yOffset++) {
+        for (int xOffset = -1; xOffset <= 1; xOffset++) {
+            if (xOffset == 0 && yOffset == 0) continue;
+            around[i] = {.x = pos.x + xOffset, .y = pos.y + yOffset};
+            i++;
+        }
+    }
+    return around;
 }
+
+int ptoi(Position coords, int width) {
+    return width * (coords.y - 1) + coords.x;
+}
+
