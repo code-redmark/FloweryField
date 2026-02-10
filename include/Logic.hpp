@@ -6,8 +6,6 @@
 
 #pragma once
 
-int ptoi(Position coords, int width);
-
 struct Position {
     int x;
     int y;
@@ -19,7 +17,7 @@ struct Cell {
     int around = 0;
 };
 
-class Game { // Handles grid and connects game to graphics
+class Logic {
     private:
     int width;
     int height;
@@ -32,6 +30,8 @@ class Game { // Handles grid and connects game to graphics
     std::array<Position, 8> GetAround(Position pos); // Get the indices of the positions around given x and y position on grid
 
     public:
-    Game();
+    Logic();
     void RevealCell(Position pos);
 };
+
+int ptoi(Position coords, int width); // X and Y position to index in grid vector

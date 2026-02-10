@@ -12,7 +12,9 @@ FetchContent_Declare(SFML
 )
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp)
+file(GLOB SOURCEDIR src/*.cpp)
+
+add_executable(main ${SOURCEDIR})
 
 target_include_directories(main PRIVATE include)
 target_compile_features(main PRIVATE cxx_std_17)

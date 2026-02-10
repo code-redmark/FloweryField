@@ -1,11 +1,11 @@
-#include "Game.hpp"
+#include "Logic.hpp"
 
-Game::Game() 
+Logic::Logic() 
     : width(width), height(height) {
         this->initializeGame();
 }
 
-void Game::initializeGame() {
+void Logic::initializeGame() {
 
     this->grid = std::vector<Cell>(this->width * this->height); // initialize grid with cell structs
 
@@ -27,7 +27,7 @@ void Game::initializeGame() {
 
 }
 
-void Game::RevealCell(Position pos) {
+void Logic::RevealCell(Position pos) {
     if (this->grid[ptoi(pos, this->width)].isBomb == true) {
         // u loose screen screen and go back, could play some isBomb audio
     } else {
@@ -48,7 +48,7 @@ void Game::RevealCell(Position pos) {
     }
 }
 
-std::array<Position, 8> Game::GetAround(Position pos) {
+std::array<Position, 8> Logic::GetAround(Position pos) {
     std::array<Position, 8> around;
     int i = 0;
     for (int yOffset = -1; yOffset <= 1; yOffset++) {
