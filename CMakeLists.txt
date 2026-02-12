@@ -13,8 +13,9 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 file(GLOB SOURCEDIR src/*.cpp)
+file (GLOB GUISRCDIR src/gui/*.cpp)
 
-add_executable(main ${SOURCEDIR})
+add_executable(main ${SOURCEDIR} ${GUISRCDIR})
 
 target_include_directories(main PRIVATE include)
 target_compile_features(main PRIVATE cxx_std_17)
