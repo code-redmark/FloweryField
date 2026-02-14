@@ -1,11 +1,33 @@
 #pragma once
 
-#include "Interface.hpp"
+#include <vector>
+#include <random>
+#include <array>
+#include <memory>
 
+#include "FloweryButton.hpp"
 
-struct CellPosition;
-struct Cell;
-enum GameState;
+enum GameState {
+    MENU = 1,
+    GAME = 2,
+};
+
+struct CellPosition {
+    int x;
+    int y;
+};
+
+struct Cell {
+    // GameEngine variables
+    bool revealed = false;
+    bool isBomb = false;
+    int around = 0;
+
+    // UI
+    std::unique_ptr<FloweryButton> button;
+
+    Cell(FloweryButton button);
+};
 
 class GameEngine { // Game logic class
     private:
@@ -21,31 +43,11 @@ class GameEngine { // Game logic class
     std::array<CellPosition, 8> GetAround(CellPosition pos); // Get the indices of the positions around given x and y position on grid
 
     public:
-    GameEngine();
+    GameEngine(int width, int height) ;
     void RevealCell(CellPosition pos);
     GameState getState();
 };
 
-enum GameState {
-    Menu = 1,
-    Game = 2,
-};
-
-struct CellPosition {
-    int x;
-    int y;
-};
-
-struct Cell {
-    // GameEngine variables
-    bool revealed = false;
-    bool isBomb = false;
-    int around = 0;
-
-    FloweryButton &button;
-
-    Cell(const FloweryButton button);
-};
 
 
 int ptoi(CellPosition coords, int width); // X and Y position to index in grid vector

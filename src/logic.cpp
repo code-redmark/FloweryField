@@ -1,34 +1,35 @@
+#include "FloweryScreen.hpp"
 #include "Game.hpp"
 
-GameEngine::GameEngine() 
-    : width(width), height(height) {
+GameEngine::GameEngine(int width, int height) 
+    : width(width), height(height), state(MENU) {
         this->initializeGame();
 }
 
-void GameEngine::initializeGame() {
+void GameEngine::initializeGame() 
+{
+    const sf::RectangleShape CellShape({100.f, 100.f});
+    
+    this->grid.resize(this->width * this->height, Cell(FloweryButton(CellShape)));
 
-    this->grid = std::vector<Cell>(this->width * this->height); // initialize grid with cell structs
+    const sf::RectangleShape CellShape({100.f, 100.f});
+    ; // initialize grid with cell structs
 
     std::random_device device;
     std::mt19937 rng(device());
 
-    std::uniform_int_distribution<int> xDist(0, this->width - 1); // x distribution
-    std::uniform_int_distribution<int> yDist(0, this->height - 1); // y distribution
+    std::uniform_int_distribution<std::mt19937::result_type> xDist(0, this->width - 1); // x distribution
+    std::uniform_int_distribution<std::mt19937::result_type> yDist(0, this->height - 1); // y distribution
 
-    
     // Set bombs
     for (int i = 0; i < (width * height) * (this->bombDensity/100.f); i++) {
-        CellPosition randCoords;
-        while (true) {
-            randCoords = {
-                .x = xDist(rng),
-                .y = yDist(rng),
-            };
-            if (this->grid[ptoi(randCoords, this->width)].isBomb == false) break;
-        }
+        CellPosition randCoords {
+            .x = (int)xDist(rng),
+            .y = (int)yDist(rng)
+        };
         this->grid[ptoi(randCoords, this->width)].isBomb = true;
     }
-
+    std::cout << "Initialized\n";
 }
 
 void GameEngine::RevealCell(CellPosition pos) {
@@ -68,6 +69,11 @@ std::array<CellPosition, 8> GameEngine::GetAround(CellPosition pos) {
 GameState GameEngine::getState() {
     return this->state;
 }
+
+
+Cell::Cell(FloweryButton button) 
+    :   button(std::make_unique<FloweryButton>(button))
+{}
 
 int ptoi(CellPosition coords, int width) {
     return width * (coords.y - 1) + coords.x;

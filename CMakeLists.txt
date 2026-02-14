@@ -14,6 +14,7 @@ FetchContent_MakeAvailable(SFML)
 
 file(GLOB SOURCEDIR src/*.cpp)
 file (GLOB GUISRCDIR src/gui/*.cpp)
+file (GLOB SCREENSRCDIR src/gui/screens/*.cpp)
 
 add_executable(main ${SOURCEDIR} ${GUISRCDIR})
 
