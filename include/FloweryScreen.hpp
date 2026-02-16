@@ -1,29 +1,21 @@
 #pragma once
 
-#include "Game.hpp"
-#include "Screens.hpp"
-
 #include <SFML/Graphics.hpp>
 #include <SFML/Main.hpp>
 
 #include <memory>
-#include <bits/stdc++.h>
 #include <vector>
 #include <random>
 
-class FloweryScreen { // Base screen class, doesn't show anything
-    private:
-    GameEngine &engine;
-    sf::RenderWindow &window;
-
+class FloweryScreen { // Base screen class, doesn't show anything    
     protected:
     virtual void OnMB1(); // On left mouse button click
+    virtual void OnMB2() {}
 
     public:
-    FloweryScreen(sf::RenderWindow &win, GameEngine engine);
+    FloweryScreen();
     virtual void HandleEvents();
     virtual void Show();
-
 };
 
 

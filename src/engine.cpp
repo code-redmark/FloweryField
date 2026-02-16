@@ -1,19 +1,16 @@
 #include "FloweryScreen.hpp"
 #include "Game.hpp"
 
-GameEngine::GameEngine(int width, int height) 
-    : width(width), height(height), state(MENU) {
+Engine::Engine(int width, int height) 
+    : width(width), height(height) {
         this->initializeGame();
 }
 
-void GameEngine::initializeGame() 
+void Engine::initializeGame() 
 {
-    const sf::RectangleShape CellShape({100.f, 100.f});
+    sf::RectangleShape CellShape({100.f, 100.f});
     
-    this->grid.resize(this->width * this->height, Cell(FloweryButton(CellShape)));
-
-    const sf::RectangleShape CellShape({100.f, 100.f});
-    ; // initialize grid with cell structs
+    //this->grid.resize(this->width * this->height, Cell(FloweryButton(CellShape, Global::Field.ResourcesHandler.BaseFont)));
 
     std::random_device device;
     std::mt19937 rng(device());
@@ -28,11 +25,12 @@ void GameEngine::initializeGame()
             .y = (int)yDist(rng)
         };
         this->grid[ptoi(randCoords, this->width)].isBomb = true;
+        std::cout << randCoords.x << ", " << randCoords.y << "set to bomb\n";
     }
-    std::cout << "Initialized\n";
+    std::cout << "Initialized grid\n";
 }
 
-void GameEngine::RevealCell(CellPosition pos) {
+void Engine::RevealCell(CellPosition pos) {
     if (this->grid[ptoi(pos, this->width)].isBomb == true) {
         // u loose screen screen and go back, could play some isBomb audio
     } else {
@@ -53,7 +51,7 @@ void GameEngine::RevealCell(CellPosition pos) {
     }
 }
 
-std::array<CellPosition, 8> GameEngine::GetAround(CellPosition pos) {
+std::array<CellPosition, 8> Engine::GetAround(CellPosition pos) {
     std::array<CellPosition, 8> around;
     int i = 0;
     for (int yOffset = -1; yOffset <= 1; yOffset++) {
@@ -66,13 +64,9 @@ std::array<CellPosition, 8> GameEngine::GetAround(CellPosition pos) {
     return around;
 }
 
-GameState GameEngine::getState() {
-    return this->state;
-}
 
-
-Cell::Cell(FloweryButton button) 
-    :   button(std::make_unique<FloweryButton>(button))
+Cell::Cell(FloweryButton &button) 
+    :   button(button)
 {}
 
 int ptoi(CellPosition coords, int width) {

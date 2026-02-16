@@ -1,18 +1,15 @@
-#include "FloweryScreen.hpp"
+#include "Game.hpp"
 
-FloweryScreen::FloweryScreen(sf::RenderWindow &win, GameEngine engine)
-    : window(win), engine(engine) {}
+FloweryScreen::FloweryScreen() {}
 
 
 void FloweryScreen::Show() {}
 
-void FloweryScreen::HandleEvents() {
-
-}
+void FloweryScreen::HandleEvents() {}
 
 void FloweryScreen::OnMB1() { 
-    sf::Vector2i winPos = this->window.getPosition();
-    if ((winPos.x >= 0 && winPos.x < this->window.getSize().x) && (winPos.y >= 0 && winPos.y < this->window.getSize().y)) {
+    sf::Vector2i winPos = Global::Field.Window.getPosition();
+    if ((winPos.x >= 0 && winPos.x < Global::Field.Window.getSize().x) && (winPos.y >= 0 && winPos.y < Global::Field.Window.getSize().y)) {
         std::cout << "Mouse clicked and is in window!";
     }
 }

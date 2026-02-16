@@ -2,42 +2,26 @@
 #include <SFML/Main.hpp>
 
 #include "Game.hpp"
-#include "FloweryScreen.hpp"
+#include "Screens.hpp"
+
+using namespace Global;
 
 int main()
 {
-    
-    GameEngine logic(9, 9); // Initialize game data
 
-    sf::RenderWindow window(sf::VideoMode(sf::Vector2u(640, 480)), "Flowery Field++");
-    
-    MenuScreen MenuGUI(window, logic);
-    GameScreen GameGUI(window, logic);
+    Field = Game(); 
+    // Screens
+    MenuScreen MenuGUI;
 
-    FloweryScreen* current = &MenuGUI;
+    Field.CurrentScreen = &MenuGUI;
     
-    while (window.isOpen())
+    while (Field.Window.isOpen())
     {
-        while (const std::optional event = window.pollEvent())
-        {
-            if (event->is<sf::Event::Closed>()) window.close();
-            switch (logic.getState()) {
-                case GAME:
-                    GameGUI.HandleEvents();
-                    break;
-                case MENU:
-                    MenuGUI.HandleEvents();
-                    break;
-            }
-        }
+        Field.CurrentScreen->HandleEvents();
 
-
-        window.clear(sf::Color::Black);
-
-        current->Show();
-
-        window.display();
-
+        Field.Window.clear(sf::Color::Black);
+        Field.CurrentScreen->Show();
+        Field.Window.display();
     }
 
 }

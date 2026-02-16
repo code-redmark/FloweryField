@@ -1,17 +1,18 @@
 #pragma once
 
-#include "SFML/Graphics.hpp"
 #include <bits/stdc++.h>
 
-#include "FloweryScreen.hpp"
-
 class FloweryButton {
-    protected:
-    sf::Transformable button;
-    std::function<void()> action;
-    bool mouseCheck();
-    public:
-    FloweryButton(sf::Transformable button);
+    private: 
+    sf::Text &label;
 
-    friend FloweryScreen;
+    sf::Shape &shape;
+    
+    public:
+    FloweryButton(sf::RectangleShape shape, sf::Text text);
+    void draw();
+    bool contains(sf::Vector2f pos);
+    std::function<void()> MB1action;
+    std::function<void()> MB2action;
+
 };

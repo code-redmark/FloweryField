@@ -1,12 +1,17 @@
-#include "Screens.hpp"
+#include "Game.hpp"
 
-FloweryButton::FloweryButton(sf::Transformable button) 
-    : button(button) {}
+FloweryButton::FloweryButton(sf::RectangleShape shape, sf::Text text)
+    :   shape(shape),
+        label(text)
+        {}
 
-bool FloweryButton::mouseCheck() {
-    // Get mouse position
-    sf::Vector2i mouse = sf::Mouse::getPosition();
-    sf::Vector2f button = this->button.getPosition();
-    return (mouse.x > button.x && mouse.x < button.x + this->button.getScale().x) && (mouse.y > button.y && mouse.y < button.y + this->button.getScale().y);
+void FloweryButton::draw() {
+    Global::Field.Window.draw(this->shape);
+    Global::Field.Window.draw(this->label);   
 }
+
+bool FloweryButton::contains(sf::Vector2f pos) {
+    return this->shape.getGlobalBounds().contains(pos);
+}
+
 
