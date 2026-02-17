@@ -1,4 +1,9 @@
+#include "SFML/Graphics.hpp"
+
 #include "Game.hpp"
+#include "FloweryComponents.hpp"
+
+#include <iostream>
 
 FloweryScreen::FloweryScreen() {}
 

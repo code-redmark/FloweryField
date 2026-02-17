@@ -9,14 +9,16 @@ using namespace Global;
 int main()
 {
 
-    Field = Game(); 
+    std::cout << "Field built\n"; 
     // Screens
     MenuScreen MenuGUI;
 
     Field.CurrentScreen = &MenuGUI;
+    std::cout << "Set screen\n";
     
     while (Field.Window.isOpen())
     {
+        
         Field.CurrentScreen->HandleEvents();
 
         Field.Window.clear(sf::Color::Black);

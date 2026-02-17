@@ -1,11 +1,8 @@
 #pragma once
 
-#include <vector>
-#include <random>
-#include <array>
-#include <memory>
+class FloweryButton;
 
-#include "FloweryButton.hpp"
+#include <vector>
 
 struct CellPosition {
     int x;

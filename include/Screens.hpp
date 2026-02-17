@@ -1,9 +1,6 @@
 #pragma once
 
-#include "FloweryScreen.hpp"
-#include "FloweryButton.hpp"
-
-#include <filesystem>
+#include "FloweryComponents.hpp"
 
 class MenuScreen : public FloweryScreen {
     private:
