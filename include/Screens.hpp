@@ -1,6 +1,6 @@
 #pragma once
 
-#include "FloweryComponents.hpp"
+#include "Game.hpp"
 
 class MenuScreen : public FloweryScreen {
     private:
@@ -20,8 +20,11 @@ class MenuScreen : public FloweryScreen {
 
 class GameScreen : public FloweryScreen {
     private:
-    sf::Text TimeCounter;
+    //sf::Text TimeCounter;
     sf::Text FlagCounter;
+    FloweryButton RestartButton;
+    FloweryButton QuitButton;
+    //std::vector<FloweryButton> grid;
 
     void OnMB1() override;
     void OnMB2() override;
@@ -32,4 +35,7 @@ class GameScreen : public FloweryScreen {
     void Show() override;
 };
 
-
+struct ScreenCollection {
+    MenuScreen Menu;
+    GameScreen Game;
+};

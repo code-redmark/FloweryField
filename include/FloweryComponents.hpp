@@ -2,9 +2,12 @@
 
 #include <SFML/Graphics.hpp>
 
+class MenuScreen;
+class GameScreen;
+
 #include <bits/stdc++.h>
 
-class MenuScreen;
+
 
 class FloweryScreen { // Base screen class, doesn't show anything    
     protected:
@@ -34,7 +37,7 @@ class FloweryButton {
 
     friend FloweryScreen;
     friend MenuScreen;
-    //friend GameScreen;
+    friend GameScreen;
 
 };
 

@@ -14,28 +14,25 @@ struct Cell {
     bool revealed = false;
     bool isBomb = false;
     int around = 0;
-
-    FloweryButton &button;
-
-    Cell(FloweryButton &button);
 };
 
 class Engine { // Game logic class
     private:
-
-    int width; 
-    int height; 
+    sf::Vector2i size;
 
     int bombDensity; // Bombs/Cell percentage (1-100)
 
     std::vector<Cell> grid;
     void initializeGame();
     
-    std::array<CellPosition, 8> GetAround(CellPosition pos); // Get the indices of the positions around given x and y position on grid
+    std::array<CellPosition, 8> GetAround(CellPosition pos); // Get positions around given x and y position on grid
 
     public:
-    Engine(int width, int height) ;
+    Engine(sf::Vector2i size);
     void RevealCell(CellPosition pos);
+
+    sf::Vector2i getSize();
+
 };
 
 

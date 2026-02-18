@@ -13,20 +13,26 @@
 
 class FloweryScreen;
 
-struct Game {
+class Game {
     private:
     int flags = 0;
 
     public:
     sf::RenderWindow Window;
-    FloweryScreen *CurrentScreen;
     Resources ResourcesHandler;
-    Engine GameEngine;
-    sf::Clock FieldClock;
+    std::unique_ptr<Engine> GameEngine;
+    //std::unique_ptr<sf::Clock> FieldClock;
+
+    // Screens
+    ScreenCollection Screens;
+
+    FloweryScreen *CurrentScreen;
 
     int GetFlags();
-    std::string ClockToString();
+    //std::string ClockToString();
     std::string FlagsToCounter();
+
+    bool isPlaying = false;
 
     Game();
 };

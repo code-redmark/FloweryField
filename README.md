@@ -1,0 +1,1 @@
+Minesweeper game made with SFML, the name is the literal translation of the game's name in italian "Prato Fiorito"
