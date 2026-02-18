@@ -1,8 +1,8 @@
 #pragma once
 
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 
 class MenuScreen;
 

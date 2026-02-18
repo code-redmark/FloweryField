@@ -22,6 +22,7 @@ struct Cell {
 
 class Engine { // Game logic class
     private:
+
     int width; 
     int height; 
 

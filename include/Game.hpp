@@ -1,18 +1,33 @@
 #pragma once
 
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <SFML/System.hpp>
 
+#include "FloweryComponents.hpp"
 #include "Resources.hpp"
 #include "Engine.hpp"
+#include "Screens.hpp"
+
+#include <string>
 
 class FloweryScreen;
 
 struct Game {
+    private:
+    int flags = 0;
+
+    public:
     sf::RenderWindow Window;
     FloweryScreen *CurrentScreen;
     Resources ResourcesHandler;
     Engine GameEngine;
-    
+    sf::Clock FieldClock;
+
+    int GetFlags();
+    std::string ClockToString();
+    std::string FlagsToCounter();
+
     Game();
 };
 

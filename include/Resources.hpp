@@ -1,7 +1,8 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#include "SFML/Audio/SoundBuffer.hpp"
+#include "SFML/Audio.hpp"
+
 
 struct Resources {
     sf::RectangleShape SelectionOutline;
@@ -10,6 +11,9 @@ struct Resources {
     sf::Font GameCounterFont;
     sf::Image GameIcon;
     sf::Image FlagIcon;
-    // sf::SoundBuffer SoundBuff;
+    sf::SoundBuffer SoundBuff;
+
+    sf::Sound alarm;
+
     Resources();
 };

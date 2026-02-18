@@ -1,6 +1,11 @@
-#include "Game.hpp"
+#include "SFML/Audio.hpp"
 
+#include "Game.hpp"
 #include "Screens.hpp"
+
+#include <cstdlib>
+
+
 
 MenuScreen::MenuScreen()
     : FloweryScreen(),
@@ -10,18 +15,18 @@ MenuScreen::MenuScreen()
     {
         Play.setPosition({Global::WindowCenter().x - Play.shape.getSize().x/2, Global::WindowCenter().y});
         Play.MB1action = [](){
-            std::cout << "Play!";
+            Global::Field.ResourcesHandler.alarm.play();
         };
-        Play.MB1action = [](){};
+        Play.MB2action = [](){};
 
 
         Exit.setPosition({Global::WindowCenter().x - Exit.shape.getSize().x/2, Global::WindowCenter().y + Play.shape.getSize().y + 25});
-                Exit.MB1action = [](){
-            std::cout << "Quit :(";
+        Exit.MB1action = [](){
+            Global::Field.Window.close();
         };
-        Exit.MB1action = [](){};
+        Exit.MB2action = [](){};
 
-        GameTitle.setPosition({Global::WindowCenter().x - GameTitle.getScale().x/2, Global::WindowCenter().y - 50});
+        GameTitle.setPosition({Global::WindowCenter().x - GameTitle.getLocalBounds().size.x/2, Global::WindowCenter().y - 50});
     }
 
 void MenuScreen::Show() {
@@ -35,22 +40,18 @@ void MenuScreen::Show() {
 void MenuScreen::HandleEvents() {
     while (std::optional<sf::Event> event = Global::Field.Window.pollEvent()) {
         if (event->is<sf::Event::Closed>()) {
+            std::cout << "Closing\n";
             Global::Field.Window.close();
-        } else if (const auto *mousePress = event->getIf<sf::Event::MouseButtonPressed>()) {
-            if (mousePress->button == sf::Mouse::Button::Left) {
-                this->OnMB1();
-            } else if (mousePress->button == sf::Mouse::Button::Right) {
-                this->OnMB2();
-            }
+        } else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+            this->OnMB1();
         }
- 
-    }   
+    }
 }
 
 void MenuScreen::OnMB1() {
-    if (this->Play.contains({(float)sf::Mouse::getPosition().x, (float)sf::Mouse::getPosition().y})) {
+    if (this->Play.contains({static_cast<float>(sf::Mouse::getPosition(Global::Field.Window).x), static_cast<float>(sf::Mouse::getPosition(Global::Field.Window).y)})) {
         Play.MB1action();
-    } else if (this->Exit.contains({(float)sf::Mouse::getPosition().x, (float)sf::Mouse::getPosition().y})) {
+    } else if (this->Exit.contains({static_cast<float>(sf::Mouse::getPosition(Global::Field.Window).x), static_cast<float>(sf::Mouse::getPosition(Global::Field.Window).y)})) {
         Exit.MB1action();
     }
 }

@@ -1,6 +1,7 @@
 #include "Game.hpp"
 #include "FloweryComponents.hpp"
 
+
 FloweryButton::FloweryButton(sf::RectangleShape shape, sf::Text text)
     :   shape(shape),
         label(text)
