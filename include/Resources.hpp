@@ -3,7 +3,6 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Audio.hpp"
 
-
 struct Resources {
     sf::RectangleShape SelectionOutline;
     sf::Font TitleFont;
@@ -17,3 +16,5 @@ struct Resources {
 
     Resources();
 };
+
+extern Resources ResourcesHandler;

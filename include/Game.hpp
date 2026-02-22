@@ -8,38 +8,53 @@
 #include "Resources.hpp"
 #include "Engine.hpp"
 #include "Screens.hpp"
+#include "ScreenCollection.hpp"
 
 #include <string>
 
 class FloweryScreen;
 
-class Game {
-    private:
-    int flags = 0;
 
-    public:
+
+class Game {
+
+    private:
+
+    int flags;
+    bool isPlaying = false;
+
     sf::RenderWindow Window;
-    Resources ResourcesHandler;
     std::unique_ptr<Engine> GameEngine;
     //std::unique_ptr<sf::Clock> FieldClock;
 
     // Screens
     ScreenCollection Screens;
-
     FloweryScreen *CurrentScreen;
 
+    public:
     int GetFlags();
-    //std::string ClockToString();
     std::string FlagsToCounter();
+    //std::string ClockToString();
 
-    bool isPlaying = false;
+    
 
+    void GameLoop(); // Start game function
+
+    // Actions
+    void NewGameAction(); // Reinitializes engine and GameScreen components
+    void QuitAction();
+    // void RevealAction();
+    // void FlagAction();
+
+    // Window functions
+    inline sf::Vector2i WindowPosition(sf::Vector2i position) { // Returns the given position relative to the game's window
+        return position - this->Window.getPosition();
+    } 
+    sf::Vector2i GetWindowPos();
+    sf::Vector2f GetWindowSize();
+
+    void drawLabels(const std::vector<sf::Text> labels);
+    void drawFloweryButtons(const std::vector<FloweryButton> buttons);
+    
     Game();
 };
-
-namespace Global {
-    inline Game Field;
-    inline sf::Vector2f WindowCenter() {
-        return {(float)Field.Window.getSize().x/2, (float)Field.Window.getSize().y/2};
-    }
-}

@@ -36,11 +36,11 @@ void Engine::initializeGame()
 
 void Engine::RevealCell(CellPosition pos) {
     if (this->grid[ptoi(pos, this->size.x)].isBomb == true) {
-        // u loose screen screen and go back, could play some isBomb audio
+        // u loose screen screen and go back, could play some audio
     } else {
         this->grid[ptoi(pos, this->size.x)].revealed = true;
         std::array<CellPosition, 8> around = GetAround(pos);
-        // if theres no bombs around reveal all bombs around pos
+        // if theres no bombs around reveal all cells around pos
         int bombsAround = 0;  // will have to use this to show number on cells
         for (CellPosition arPos : around) {
             if (this->grid[ptoi(arPos, size.x)].isBomb == true) bombsAround += 1;

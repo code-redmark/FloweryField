@@ -2,15 +2,12 @@
 #include "FloweryComponents.hpp"
 
 
-FloweryButton::FloweryButton(sf::RectangleShape shape, sf::Text text)
+FloweryButton::FloweryButton(sf::RectangleShape shape, sf::Text text, sf::Color color)
     :   shape(shape),
         label(text)
-        {}
-
-void FloweryButton::draw() {
-    Global::Field.Window.draw(this->shape);
-    Global::Field.Window.draw(this->label);   
-}
+        {
+            shape.setFillColor(color);
+        }
 
 void FloweryButton::setPosition(sf::Vector2f position) {
     this->shape.setPosition(position);
@@ -19,6 +16,10 @@ void FloweryButton::setPosition(sf::Vector2f position) {
 
 bool FloweryButton::contains(sf::Vector2f pos) {
     return this->shape.getGlobalBounds().contains(pos);
+}
+
+sf::Vector2f FloweryButton::getSize() {
+    return this->shape.getSize();
 }
 
 

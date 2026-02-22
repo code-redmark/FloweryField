@@ -5,19 +5,23 @@
 class MenuScreen;
 class GameScreen;
 
+class Game;
+
 #include <bits/stdc++.h>
 
 
 
-class FloweryScreen { // Base screen class, doesn't show anything    
+class FloweryScreen { // Base screen class, doesn't show anything        
     protected:
+    Game &game;
+
     virtual void OnMB1(); // On left mouse button click
     virtual void OnMB2() {}
 
     public:
-    FloweryScreen();
-    virtual void HandleEvents();
-    virtual void Show();
+    FloweryScreen(Game &game);
+    virtual void HandleEvents(sf::RenderWindow &GameWindow);
+    virtual void Draw(sf::RenderWindow &GameWindow);
 };
 
 
@@ -28,16 +32,16 @@ class FloweryButton {
     sf::RectangleShape shape;
     
     public:
-    FloweryButton(sf::RectangleShape shape, sf::Text text);
+    FloweryButton(sf::RectangleShape shape, sf::Text text, sf::Color color);
     void setPosition(sf::Vector2f position);
-    void draw();
     bool contains(sf::Vector2f pos);
+
     std::function<void()> MB1action;
     std::function<void()> MB2action;
 
-    friend FloweryScreen;
-    friend MenuScreen;
-    friend GameScreen;
+    sf::Vector2f getSize();
+
+    friend Game;
 
 };
 
