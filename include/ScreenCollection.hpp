@@ -6,8 +6,8 @@ class Game;
 struct ScreenCollection {
     Game &game;
 
-    MenuScreen Menu;
-    // GameScreen Game; 
+    MenuScreen MenuUI;
+    GameScreen GameUI; 
 
     ScreenCollection(Game &game);
 };

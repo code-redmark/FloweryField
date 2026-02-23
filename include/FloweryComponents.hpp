@@ -15,13 +15,13 @@ class FloweryScreen { // Base screen class, doesn't show anything
     protected:
     Game &game;
 
-    virtual void OnMB1(); // On left mouse button click
+    virtual void OnMB1(sf::RenderWindow &GameWindow); // On left mouse button click
     virtual void OnMB2() {}
 
     public:
     FloweryScreen(Game &game);
-    virtual void HandleEvents(sf::RenderWindow &GameWindow);
-    virtual void Draw(sf::RenderWindow &GameWindow);
+    void HandleEvents(sf::RenderWindow &GameWindow);
+    virtual void Draw();
 };
 
 
@@ -34,6 +34,7 @@ class FloweryButton {
     public:
     FloweryButton(sf::RectangleShape shape, sf::Text text, sf::Color color);
     void setPosition(sf::Vector2f position);
+    sf::Vector2f getPosition();
     bool contains(sf::Vector2f pos);
 
     std::function<void()> MB1action;

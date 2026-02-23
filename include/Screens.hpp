@@ -9,30 +9,23 @@ class MenuScreen : public FloweryScreen {
     FloweryButton Play;
     FloweryButton Exit;
 
-    void OnMB1() override;
+    void OnMB1(sf::RenderWindow &GameWindow) override;
     void OnMB2() override {}
 
     public:
     MenuScreen(Game &game);
-    void HandleEvents(sf::RenderWindow &GameWindow) override;
-    void Draw(sf::RenderWindow &GameWindow) override;
+    void Draw() override;
 };
 
-// class GameScreen : public FloweryScreen {
-//     private:
-//     //sf::Text TimeCounter;
-//     sf::Text FlagCounter;
-//     FloweryButton RestartButton;
-//     FloweryButton QuitButton;
-//     //std::vector<FloweryButton> grid;
+class GameScreen : public FloweryScreen {
+    private:
+    FloweryButton Quit;
+    void OnMB1(sf::RenderWindow &GameWindow) override;
+    void OnMB2() override {} // To override with flag tag
 
-//     void OnMB1() override;
-//     void OnMB2() override;
-
-//     public:
-//     GameScreen();
-//     void HandleEvents() override;
-//     void Show() override;
-// };
+    public:
+    GameScreen(Game &game);
+    void Draw() override;
+};
 
 

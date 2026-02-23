@@ -17,11 +17,7 @@ class FloweryScreen;
 
 
 class Game {
-
     private:
-
-    int flags;
-    bool isPlaying = false;
 
     sf::RenderWindow Window;
     std::unique_ptr<Engine> GameEngine;
@@ -43,6 +39,7 @@ class Game {
     // Actions
     void NewGameAction(); // Reinitializes engine and GameScreen components
     void QuitAction();
+    void BackToMenuAction();
     // void RevealAction();
     // void FlagAction();
 
@@ -53,8 +50,8 @@ class Game {
     sf::Vector2i GetWindowPos();
     sf::Vector2f GetWindowSize();
 
-    void drawLabels(const std::vector<sf::Text> labels);
-    void drawFloweryButtons(const std::vector<FloweryButton> buttons);
-    
+    void drawLabel(sf::Text &label);
+    void drawFloweryButton(FloweryButton &button);
+
     Game();
 };

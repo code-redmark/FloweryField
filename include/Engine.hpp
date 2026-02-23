@@ -18,12 +18,14 @@ struct Cell {
 
 class Engine { // Game logic class
     private:
-    sf::Vector2i size;
+    int flags = 0;
+    bool isPlaying = false;
+
+    sf::Vector2i GridSize;
 
     int bombDensity; // Bombs/Cell percentage (1-100)
 
     std::vector<Cell> grid;
-    void initializeGame();
     
     std::array<CellPosition, 8> GetAround(CellPosition pos); // Get positions around given x and y position on grid
 
@@ -31,7 +33,9 @@ class Engine { // Game logic class
     Engine(sf::Vector2i size);
     void RevealCell(CellPosition pos);
 
-    sf::Vector2i getSize();
+    sf::Vector2i getGridSize();
+    
+    friend class Game;
 
 };
 

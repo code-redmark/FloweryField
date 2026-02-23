@@ -7,43 +7,30 @@
 #include <iostream>
 
 Engine::Engine(sf::Vector2i size) 
-    : size(size), bombDensity(30) {
-        this->initializeGame();
-}
+    : GridSize(size), bombDensity(30) 
+    {
+        grid.resize(GridSize.x * GridSize.y, Cell());
 
-void Engine::initializeGame() 
-{
+        std::random_device device;
+        std::mt19937 generator(device());
 
-    this->grid.resize(this->size.x * this->size.y, Cell());
+        std::uniform_int_distribution posDist(0, GridSize.x * GridSize.y - 1);
 
-    std::random_device device;
-    std::mt19937 rng(device());
-
-    std::uniform_int_distribution<std::mt19937::result_type> xDist(0, this->size.x - 1); // x distribution
-    std::uniform_int_distribution<std::mt19937::result_type> yDist(0, this->size.y - 1); // y distribution
-
-    // Set bombs
-    for (int i = 0; i < (this->size.x * this->size.y) * (this->bombDensity/100.f); i++) {
-        CellPosition randCoords {
-            .x = (int)xDist(rng),
-            .y = (int)yDist(rng)
-        };
-        this->grid[ptoi(randCoords, this->size.x)].isBomb = true;
-        std::cout << randCoords.x << ", " << randCoords.y << "set to bomb\n";
+        for (int i = 0; i < static_cast<float>(GridSize.x * GridSize.y / 100 * bombDensity); i++) {
+            this->grid[posDist(generator)].isBomb = true;
+        }
     }
-    std::cout << "Initialized grid\n";
-}
 
 void Engine::RevealCell(CellPosition pos) {
-    if (this->grid[ptoi(pos, this->size.x)].isBomb == true) {
+    if (this->grid[ptoi(pos, this->GridSize.x)].isBomb == true) {
         // u loose screen screen and go back, could play some audio
     } else {
-        this->grid[ptoi(pos, this->size.x)].revealed = true;
+        this->grid[ptoi(pos, this->GridSize.x)].revealed = true;
         std::array<CellPosition, 8> around = GetAround(pos);
         // if theres no bombs around reveal all cells around pos
         int bombsAround = 0;  // will have to use this to show number on cells
         for (CellPosition arPos : around) {
-            if (this->grid[ptoi(arPos, size.x)].isBomb == true) bombsAround += 1;
+            if (this->grid[ptoi(arPos, this->GridSize.x)].isBomb == true) bombsAround += 1;
         }
 
         if (bombsAround == 0) {
@@ -51,7 +38,6 @@ void Engine::RevealCell(CellPosition pos) {
                 RevealCell(ar);
             }
         }
-
     }
 }
 
@@ -69,8 +55,8 @@ std::array<CellPosition, 8> Engine::GetAround(CellPosition pos) {
 }
 
 
-sf::Vector2i Engine::getSize() {
-    return this->size;
+sf::Vector2i Engine::getGridSize() {
+    return this->GridSize;
 }
 
 int ptoi(CellPosition coords, int width) {

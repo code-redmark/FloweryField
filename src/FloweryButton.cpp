@@ -14,6 +14,10 @@ void FloweryButton::setPosition(sf::Vector2f position) {
     this->label.setPosition(position);
 }
 
+sf::Vector2f FloweryButton::getPosition() {
+    return this->shape.getPosition();
+}
+
 bool FloweryButton::contains(sf::Vector2f pos) {
     return this->shape.getGlobalBounds().contains(pos);
 }
