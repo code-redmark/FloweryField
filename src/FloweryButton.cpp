@@ -6,7 +6,7 @@ FloweryButton::FloweryButton(sf::RectangleShape shape, sf::Text text, sf::Color 
     :   shape(shape),
         label(text)
         {
-            shape.setFillColor(color);
+            this->shape.setFillColor(color);
         }
 
 void FloweryButton::setPosition(sf::Vector2f position) {

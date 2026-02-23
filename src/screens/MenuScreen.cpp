@@ -7,7 +7,7 @@
 MenuScreen::MenuScreen(Game &game)
     : FloweryScreen(game),
         GameTitle(sf::Text(ResourcesHandler.BaseFont, "Flowery Field++")),
-        Play(FloweryButton(sf::RectangleShape({200.f, 100.f}), sf::Text(ResourcesHandler.BaseFont, "Play"), sf::Color(255, 0, 132, 255))),
+        Play(FloweryButton(sf::RectangleShape({200.f, 100.f}), sf::Text(ResourcesHandler.BaseFont, "Play"), sf::Color(0, 255, 0, 255))),
         Exit(FloweryButton(sf::RectangleShape({200.f, 100.f}), sf::Text(ResourcesHandler.BaseFont, "Quit"), sf::Color(255, 0, 132, 255)))
     {
         sf::Vector2f WindowCenter = {game.GetWindowSize().x/2, game.GetWindowSize().y/2};
