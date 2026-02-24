@@ -19,6 +19,7 @@ class MenuScreen : public FloweryScreen {
 
 class GameScreen : public FloweryScreen {
     private:
+    FloweryButton CellUI;
     FloweryButton Quit;
     sf::Text ClockUI;
 

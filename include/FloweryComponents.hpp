@@ -32,9 +32,13 @@ class FloweryButton {
     sf::RectangleShape shape;
     
     public:
-    FloweryButton(sf::RectangleShape shape, sf::Text text, sf::Color color);
+    FloweryButton(sf::RectangleShape shape, sf::Text text); // Makes a white button
+    FloweryButton(sf::RectangleShape shape, sf::Text text, sf::Color FillColor); // Makes a button of given fill color
+    FloweryButton(sf::RectangleShape shape, sf::Text, sf::Color FillColor, sf::Color OutlineColor); // Makes a button of given fill color and outline color
+    
     void setPosition(sf::Vector2f position);
     sf::Vector2f getPosition();
+    
     bool contains(sf::Vector2f pos);
 
     std::function<void()> MB1action;

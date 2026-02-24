@@ -1,17 +1,29 @@
 #include "Game.hpp"
 #include "FloweryComponents.hpp"
 
+FloweryButton::FloweryButton(sf::RectangleShape shape, sf::Text text, sf::Color FillColor, sf::Color OutlineColor)
+    :   shape(shape), label(text)
+    {
+        this->shape.setFillColor(FillColor);
+        this->shape.setOutlineColor(OutlineColor);
+        this->shape.setOutlineThickness(4.f);
+    }
 
-FloweryButton::FloweryButton(sf::RectangleShape shape, sf::Text text, sf::Color color)
-    :   shape(shape),
-        label(text)
-        {
-            this->shape.setFillColor(color);
-        }
+FloweryButton::FloweryButton(sf::RectangleShape shape, sf::Text text, sf::Color FillColor)
+    :   shape(shape), label(text)
+    {
+        this->shape.setFillColor(FillColor);
+    }
+
+FloweryButton::FloweryButton(sf::RectangleShape shape, sf::Text text)
+    :   shape(shape), label(text) 
+    {}
 
 void FloweryButton::setPosition(sf::Vector2f position) {
     this->shape.setPosition(position);
-    this->label.setPosition(position);
+    sf::FloatRect labelBounds = this->label.getLocalBounds();
+    std::cout << "size: " << labelBounds.size.x;
+    this->label.setPosition({static_cast<float>(position.x + this->getSize().x/2 - labelBounds.size.x/2), static_cast<float>(position.y + this->getSize().y/2 - labelBounds.size.y/2)});
 }
 
 sf::Vector2f FloweryButton::getPosition() {
