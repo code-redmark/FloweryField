@@ -20,10 +20,14 @@ class MenuScreen : public FloweryScreen {
 class GameScreen : public FloweryScreen {
     private:
     FloweryButton Quit;
+    sf::Text ClockUI;
+
     void OnMB1(sf::RenderWindow &GameWindow) override;
     void OnMB2() override {} // To override with flag tag
 
+
     public:
+    void HandleEvents(sf::RenderWindow &GameWindow) override; // Overriding for clock
     GameScreen(Game &game);
     void Draw() override;
 };

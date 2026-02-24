@@ -20,7 +20,7 @@ class FloweryScreen { // Base screen class, doesn't show anything
 
     public:
     FloweryScreen(Game &game);
-    void HandleEvents(sf::RenderWindow &GameWindow);
+    virtual void HandleEvents(sf::RenderWindow &GameWindow);
     virtual void Draw();
 };
 

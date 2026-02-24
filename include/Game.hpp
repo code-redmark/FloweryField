@@ -28,13 +28,10 @@ class Game {
     FloweryScreen *CurrentScreen;
 
     public:
-    int GetFlags();
-    std::string FlagsToCounter();
-    //std::string ClockToString();
-
+    void GameLoop(); // Start game function    
     
-
-    void GameLoop(); // Start game function
+    std::string FlagsToString(); // Returns the game's engine flags value as a string
+    std::string ClockToString(); // Returns the game's engine sf::Clock value as a string
 
     // Actions
     void NewGameAction(); // Reinitializes engine and GameScreen components

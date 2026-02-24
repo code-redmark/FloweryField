@@ -18,21 +18,20 @@ void Game::GameLoop() {
         this->Window.clear(sf::Color::Black);
         this->CurrentScreen->Draw();
         this->Window.display();
-        
     }
 
 }
 
-
-
-std::string Game::FlagsToCounter() {
+std::string Game::FlagsToString() {
     char buffer[3];
-    sprintf(buffer, "%02d", this->GetFlags());
+    sprintf(buffer, "%02d", this->GameEngine->flags);
     return buffer;
 }
 
-int Game::GetFlags() {
-    return this->GetFlags();
+std::string Game::ClockToString() {
+    char buffer[9];
+    sprintf(buffer, "%03d", static_cast<int>(this->GameEngine->GameClock.getElapsedTime().asSeconds()));
+    return buffer;
 }
 
 sf::Vector2i Game::GetWindowPos() {

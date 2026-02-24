@@ -5,14 +5,11 @@
 
 void Game::NewGameAction() {
 
-    if (this->GameEngine != nullptr)
-        std::cout << "Playing: " << this->GameEngine->isPlaying << "\n";
     if (this->GameEngine == nullptr || this->GameEngine->isPlaying == false) {
         this->CurrentScreen = &this->Screens.GameUI;
         
         this->GameEngine = std::make_unique<Engine>(Engine({9, 9})); // TODO : add new screen to select grid size (difficulty)
         this->GameEngine->isPlaying = true;
-        
     }
 
 }

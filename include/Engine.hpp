@@ -18,8 +18,11 @@ struct Cell {
 
 class Engine { // Game logic class
     private:
-    int flags = 0;
     bool isPlaying = false;
+    
+    int flags = 0;
+    sf::Clock GameClock;
+    
 
     sf::Vector2i GridSize;
 
