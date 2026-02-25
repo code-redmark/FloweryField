@@ -47,8 +47,13 @@ class Game {
     sf::Vector2i GetWindowPos();
     sf::Vector2f GetWindowSize();
 
+
+    // Engine functions
+    sf::Vector2i GetEngineSize();
+
     void drawLabel(sf::Text &label);
     void drawFloweryButton(FloweryButton &button);
+    void drawFloweryGrid(FloweryGrid &grid);
 
     Game();
 };

@@ -5,11 +5,13 @@ ScreenCollection::ScreenCollection(Game &game)
     :   game(game), MenuUI(MenuScreen(game)), GameUI(GameScreen(game)) {}
 
 Game::Game() 
-    :   Window(sf::RenderWindow(sf::VideoMode({800, 600}), "Flowery Field++", sf::Style::Titlebar | sf::Style::Close)),
+    :   Window(sf::RenderWindow(sf::VideoMode({1366, 768}), "Flowery Field++", sf::Style::Titlebar | sf::Style::Close)),
         GameEngine(nullptr), // Initialized when play is pressed
         Screens(ScreenCollection(*this)),
         CurrentScreen(&this->Screens.MenuUI)
-    {}
+    {
+        this->Window.setSize(sf::Vector2u(1366, 768));
+    }
 
 
 void Game::GameLoop() {
@@ -43,6 +45,10 @@ sf::Vector2f Game::GetWindowSize() {
     return {static_cast<float>(size.x), static_cast<float>(size.y)};
 }
 
+sf::Vector2i Game::GetEngineSize() {
+    return this->GameEngine->getGridSize();
+}
+
 void Game::drawLabel(sf::Text &label) {
     this->Window.draw(label); // Drawing single item for debugging, need to use a list
 }
@@ -50,4 +56,11 @@ void Game::drawLabel(sf::Text &label) {
 void Game::drawFloweryButton(FloweryButton &button) {
     this->Window.draw(button.shape);
     this->Window.draw(button.label);
+}
+
+void Game::drawFloweryGrid(FloweryGrid &grid) {
+    this->Window.draw(grid.GridShape);
+    for (sf::RectangleShape line : grid.GridLines) {
+        this->Window.draw(line);
+    }
 }

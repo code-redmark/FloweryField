@@ -13,14 +13,15 @@ void FloweryScreen::Draw() {
 }
 
 void FloweryScreen::HandleEvents(sf::RenderWindow &GameWindow) { // Base events
-    while (std::optional<sf::Event> event = GameWindow.pollEvent())
+    while (std::optional<sf::Event> event = GameWindow.pollEvent()) {
     if (event->is<sf::Event::Closed>()) {
-        GameWindow.close();
-    } else if (auto* click = event->getIf<sf::Event::MouseButtonPressed>()) {
-        if (click->button == sf::Mouse::Button::Left) {
-            this->OnMB1(GameWindow);
-        } else if (click->button == sf::Mouse::Button::Right) {
-            this->OnMB2();
+            GameWindow.close();
+        } else if (auto* click = event->getIf<sf::Event::MouseButtonPressed>()) {
+            if (click->button == sf::Mouse::Button::Left) {
+                this->OnMB1(GameWindow);
+            } else if (click->button == sf::Mouse::Button::Right) {
+                this->OnMB2();
+            }
         }
     }
 }

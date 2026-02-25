@@ -19,7 +19,8 @@ class MenuScreen : public FloweryScreen {
 
 class GameScreen : public FloweryScreen {
     private:
-    FloweryButton CellUI;
+    FloweryGrid GridUI;
+    //FloweryButton CellUI;
     FloweryButton Quit;
     sf::Text ClockUI;
 
@@ -31,6 +32,9 @@ class GameScreen : public FloweryScreen {
     void HandleEvents(sf::RenderWindow &GameWindow) override; // Overriding for clock
     GameScreen(Game &game);
     void Draw() override;
+
+    friend Game;
+
 };
 
 

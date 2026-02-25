@@ -4,8 +4,11 @@ project(MineSweeperPP LANGUAGES CXX)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_BUILD_TYPE Debug)
 
+# Address sanitizer stuff
 set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
 set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
+
+set(SRCDIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 include(FetchContent)
 
@@ -16,10 +19,10 @@ FetchContent_Declare(SFML
 )
 FetchContent_MakeAvailable(SFML)
 
-file(GLOB SOURCEDIR src/*.cpp)
-file (GLOB SCREENSRCDIR src/screens/*.cpp)
+file(GLOB_RECURSE SOURCEFILES "${SRCDIR}/*.cpp")
 
-add_executable(main ${SOURCEDIR} ${SCREENSRCDIR})
+
+add_executable(main ${SOURCEFILES})
 
 target_include_directories(main PRIVATE include)
 target_compile_features(main PRIVATE cxx_std_17)
