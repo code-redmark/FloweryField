@@ -57,8 +57,11 @@ class FloweryGrid {
     
     public:
     FloweryGrid(sf::Vector2f WindowSize, sf::Vector2i WindowPos, sf::Vector2i GameSize);
+    void ReloadGrid(sf::Vector2i GameSize);
+
     bool contains(sf::Vector2f pos);
     sf::Vector2i getCellinPosition(); // Returns the coordinates of the cell in a specific position on the grid, its used by GameEngine to know which cell to reveal/flag
+
 
     friend Game;
 };

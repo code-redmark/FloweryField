@@ -22,7 +22,6 @@ FloweryButton::FloweryButton(sf::RectangleShape shape, sf::Text text)
 void FloweryButton::setPosition(sf::Vector2f position) {
     this->shape.setPosition(position);
     sf::FloatRect labelBounds = this->label.getLocalBounds();
-    std::cout << "size: " << labelBounds.size.x;
     this->label.setPosition({static_cast<float>(position.x + this->getSize().x/2 - labelBounds.size.x/2), static_cast<float>(position.y + this->getSize().y/2 - labelBounds.size.y/2)});
 }
 

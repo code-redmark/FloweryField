@@ -9,6 +9,7 @@
 Engine::Engine(sf::Vector2i size) 
     : GridSize(size), bombDensity(30) 
     {
+        std::cout << "Reinitializing engine with: " << size.x << ", " << size.y << "\n";
         grid.resize(GridSize.x * GridSize.y, Cell());
 
         std::random_device device;
