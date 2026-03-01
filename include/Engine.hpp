@@ -14,6 +14,8 @@ struct CellData {
 
 class Engine { // Game logic class
     private:
+    std::vector<int> bombs;
+
     bool isPlaying = false;
     
     int flags = 0;

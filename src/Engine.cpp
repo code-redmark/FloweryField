@@ -7,7 +7,7 @@
 #include <iostream>
 
 Engine::Engine(sf::Vector2i size) 
-    : GridSize(size), bombDensity(70) 
+    : GridSize(size), bombDensity(12) 
     {
         std::cout << "Reinitializing engine with: " << size.x << ", " << size.y << "\n";
         grid.resize(GridSize.x * GridSize.y, CellData());
@@ -17,17 +17,27 @@ Engine::Engine(sf::Vector2i size)
 
         std::uniform_int_distribution posDist(0, GridSize.x * GridSize.y - 1);
 
-        for (int i = 0; i < static_cast<float>(GridSize.x * GridSize.y / 100 * bombDensity); i++) {
+        int bombAmount = static_cast<int>(size.x * size.y / 100.f * bombDensity);
+        std::cout << bombAmount << "\n";
+        for (int i = 0; i < bombAmount; i++) {
             int newBomb = posDist(generator);
             this->grid[newBomb].isBomb = true;
+            this->bombs.push_back(newBomb);
 
             std::array<sf::Vector2i, 8> around = GetAround(itop(newBomb, size.x));
             for (sf::Vector2i cellPos : around) {
+
+                int index = ptoi(cellPos, size.x);
+                if (index < 0 || index >= this->grid.size()) continue;
+            
                 this->grid[ptoi(cellPos, size.x)].around += 1;
-                std::cout << ptoi(cellPos, size.x) << " has " << this->grid[ptoi(cellPos, size.x)].around << "bombs around\n"; 
             }
         }
-        std::cout << "Engine done\n";
+        std::cout << "Engine done\nBombs: ";
+        for (int index : this->bombs) {
+            std::cout << index << ", ";
+        }
+        std::cout << "\n";
     }
 
 CellData Engine::GetCellData(sf::Vector2i pos) {
