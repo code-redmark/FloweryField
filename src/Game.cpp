@@ -17,7 +17,7 @@ Game::Game()
 void Game::GameLoop() {
     while (this->Window.isOpen()) {
         this->CurrentScreen->HandleEvents(this->Window);
-        this->Window.clear(sf::Color::Black);
+        this->Window.clear(sf::Color(120, 110, 115, 255));
         this->CurrentScreen->Draw();
         this->Window.display();
     }
@@ -48,6 +48,26 @@ sf::Vector2f Game::GetWindowSize() {
 sf::Vector2i Game::GetEngineSize() {
     return this->GameEngine->getGridSize();
 }
+
+void Game::RevealClick(sf::Vector2i CellPosition) {
+    if (ptoi(CellPosition, this->GameEngine->GridSize.x) > this->GameEngine->grid.size()) {
+        std::cout << "Invalid cell position\n";
+        return;
+    }
+
+    CellData data = this->GameEngine->GetCellData(CellPosition);
+    if (data.isBomb == false) {
+        std::cout << "not a bomb. " << data.around << " bombs around\n";
+    } else {
+        ResourcesHandler.alarm.play(); 
+        std::cout << "clicked a bomb!\n " << data.around << " bombs around\n";
+        // Show bombs
+        // Getbombs (need to save bombs in an array)
+    }
+}
+
+void Game::FlagClick(sf::Vector2i CellPosition) {}
+
 
 void Game::drawLabel(sf::Text &label) {
     this->Window.draw(label); // Drawing single item for debugging, need to use a list

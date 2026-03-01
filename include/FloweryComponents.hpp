@@ -52,6 +52,9 @@ class FloweryButton {
 
 class FloweryGrid {
     private:
+    int cellLength;
+    int cellHeight;
+
     sf::RectangleShape GridShape;
     std::vector<sf::RectangleShape> GridLines;
     
@@ -60,7 +63,7 @@ class FloweryGrid {
     void ReloadGrid(sf::Vector2i GameSize);
 
     bool contains(sf::Vector2f pos);
-    sf::Vector2i getCellinPosition(); // Returns the coordinates of the cell in a specific position on the grid, its used by GameEngine to know which cell to reveal/flag
+    sf::Vector2i ScreenPosToCell(sf::Vector2f pos); // Returns the coordinates of the cell in a specific position on the grid, its used by GameEngine to know which cell to reveal/flag
 
 
     friend Game;

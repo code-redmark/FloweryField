@@ -5,7 +5,7 @@ class Game;
 
 GameScreen::GameScreen(Game &game)
     : FloweryScreen(game),
-        GridUI(FloweryGrid({0.f,0.f}, {0,0}, {0,0})),
+        GridUI(FloweryGrid(game.GetWindowSize(), {0,0}, {0,0})),
         Quit(FloweryButton(sf::RectangleShape({200.f, 100.f}), sf::Text(ResourcesHandler.BaseFont, "Menu"), sf::Color(255, 0, 0, 255))),
         ClockUI(sf::Text(ResourcesHandler.BaseFont, "clock"))
     {
@@ -20,12 +20,19 @@ GameScreen::GameScreen(Game &game)
     }
 
 void GameScreen::OnMB1(sf::RenderWindow &GameWindow) {
-    sf::Vector2i MousePosition = sf::Mouse::getPosition(GameWindow);
+    sf::Vector2f MousePosition = {static_cast<float>(sf::Mouse::getPosition(GameWindow).x), static_cast<float>(sf::Mouse::getPosition(GameWindow).y)};
     std::cout << MousePosition.x << " " << MousePosition.y << "\n";
-    if (this->Quit.contains({static_cast<float>(MousePosition.x), static_cast<float>(MousePosition.y)})) {
+
+    if (this->GridUI.contains(MousePosition)) {
+        this->game.RevealClick(this->GridUI.ScreenPosToCell({MousePosition.x, MousePosition.y}));
+    }
+
+    if (this->Quit.contains(MousePosition)) {
         Quit.MB1action();
     }
 }
+
+void GameScreen::OnMB2() {}
 
 void GameScreen::HandleEvents(sf::RenderWindow &GameWindow) {
     FloweryScreen::HandleEvents(GameWindow);

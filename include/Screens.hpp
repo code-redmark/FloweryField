@@ -25,7 +25,7 @@ class GameScreen : public FloweryScreen {
     sf::Text ClockUI;
 
     void OnMB1(sf::RenderWindow &GameWindow) override;
-    void OnMB2() override {} // To override with flag tag
+    void OnMB2() override; // To override with flag tag
 
 
     public:

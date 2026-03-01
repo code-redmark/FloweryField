@@ -21,19 +21,17 @@ class Game {
 
     sf::RenderWindow Window;
     std::unique_ptr<Engine> GameEngine;
-    //std::unique_ptr<sf::Clock> FieldClock;
 
-    // Screens
     ScreenCollection Screens;
     FloweryScreen *CurrentScreen;
 
     public:
-    void GameLoop(); // Start game function    
+    void GameLoop();   
     
-    std::string FlagsToString(); // Returns the game's engine flags value as a string
-    std::string ClockToString(); // Returns the game's engine sf::Clock value as a string
+    std::string FlagsToString(); 
+    std::string ClockToString(); 
 
-    // Actions
+    // Actions (./actions.cpp)
     void NewGameAction(); // Reinitializes engine and GameScreen components
     void QuitAction();
     void BackToMenuAction();
@@ -50,6 +48,8 @@ class Game {
 
     // Engine functions
     sf::Vector2i GetEngineSize();
+    void RevealClick(sf::Vector2i CellPosition); // Click means it comes from UI
+    void FlagClick(sf::Vector2i CellPosition);
 
     void drawLabel(sf::Text &label);
     void drawFloweryButton(FloweryButton &button);

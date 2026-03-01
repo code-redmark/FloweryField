@@ -2,15 +2,11 @@
 
 class FloweryButton;
 
+#include <SFML/Graphics.hpp>
+
 #include <vector>
 
-struct CellPosition {
-    int x;
-    int y;
-};
-
-struct Cell {
-    // GameEngine variables
+struct CellData {
     bool revealed = false;
     bool isBomb = false;
     int around = 0;
@@ -28,13 +24,13 @@ class Engine { // Game logic class
 
     int bombDensity; // Bombs/Cell percentage (1-100)
 
-    std::vector<Cell> grid;
+    std::vector<CellData> grid;
     
-    std::array<CellPosition, 8> GetAround(CellPosition pos); // Get positions around given x and y position on grid
+    std::array<sf::Vector2i, 8> GetAround(sf::Vector2i pos); // Get positions around given x and y position on grid
 
     public:
     Engine(sf::Vector2i size);
-    void RevealCell(CellPosition pos);
+    CellData GetCellData(sf::Vector2i pos);
 
     sf::Vector2i getGridSize();
     
@@ -44,4 +40,5 @@ class Engine { // Game logic class
 
 
 
-int ptoi(CellPosition coords, int width); // X and Y position to index in grid vector
+sf::Vector2i itop(int index, int width); // index to X and Y position in grid vector
+int ptoi(sf::Vector2i coords, int width); // X and Y position to index in grid vector
