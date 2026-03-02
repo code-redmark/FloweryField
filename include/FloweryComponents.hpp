@@ -16,7 +16,7 @@ class FloweryScreen { // Base screen class, doesn't show anything
     Game &game;
 
     virtual void OnMB1(sf::RenderWindow &GameWindow); // On left mouse button click
-    virtual void OnMB2() {}
+    virtual void OnMB2(sf::RenderWindow &GameWindow) {}
 
     public:
     FloweryScreen(Game &game);
@@ -52,16 +52,25 @@ class FloweryButton {
 
 class FloweryGrid {
     private:
+    sf::Vector2i CurrentGameSize;
     int cellLength;
     int cellHeight;
 
     sf::RectangleShape GridShape;
     std::vector<sf::RectangleShape> GridLines;
+
+    std::vector<sf::Sprite> BombSprites;
     
     public:
     FloweryGrid(sf::Vector2f WindowSize, sf::Vector2i WindowPos, sf::Vector2i GameSize);
-    void ReloadGrid(sf::Vector2i GameSize);
+    
+    sf::Vector2f getSize();
+    void setPosition(sf::Vector2f position);
+    sf::Vector2f getPosition();
 
+
+    void ReloadGrid(sf::Vector2i GameSize); // Reinitializes the grid's shape
+    
     bool contains(sf::Vector2f pos);
     sf::Vector2i ScreenPosToCell(sf::Vector2f pos); // Returns the coordinates of the cell in a specific position on the grid, its used by GameEngine to know which cell to reveal/flag
 

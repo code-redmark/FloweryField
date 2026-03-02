@@ -10,7 +10,6 @@ class MenuScreen : public FloweryScreen {
     FloweryButton Exit;
 
     void OnMB1(sf::RenderWindow &GameWindow) override;
-    void OnMB2() override {}
 
     public:
     MenuScreen(Game &game);
@@ -25,7 +24,7 @@ class GameScreen : public FloweryScreen {
     sf::Text ClockUI;
 
     void OnMB1(sf::RenderWindow &GameWindow) override;
-    void OnMB2() override; // To override with flag tag
+    void OnMB2(sf::RenderWindow &GameWindow) override; // To override with flag tag
 
 
     public:
@@ -35,6 +34,22 @@ class GameScreen : public FloweryScreen {
 
     friend Game;
 
+};
+
+class LossScreen : public FloweryScreen {
+    private:
+    FloweryGrid grid;
+    sf::Text YouLose;
+    FloweryButton Menu;
+    FloweryButton PlayAgain;
+
+    void OnMB1(sf::RenderWindow &GameWindow) override;
+
+    public:
+    LossScreen(Game &game, FloweryGrid grid);
+    void Draw() override;
+
+    friend Game;
 };
 
 

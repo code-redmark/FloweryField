@@ -7,7 +7,9 @@ struct ScreenCollection {
     Game &game;
 
     MenuScreen MenuUI;
-    GameScreen GameUI; 
+    GameScreen GameUI;
+
+    LossScreen Loss;
 
     ScreenCollection(Game &game);
 };

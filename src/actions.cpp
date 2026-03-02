@@ -5,6 +5,7 @@
 
 void Game::NewGameAction() {
     if (this->GameEngine == nullptr || this->GameEngine->isPlaying == false) {
+        ResourcesHandler.alarm.stop();
         this->GameEngine = std::make_unique<Engine>(Engine({9, 9})); // TODO : add new screen to select grid size (difficulty)
         this->GameEngine->isPlaying = true;
 
@@ -20,6 +21,7 @@ void Game::QuitAction() {
 }
 
 void Game::BackToMenuAction() {
+    ResourcesHandler.alarm.stop();
     this->CurrentScreen = &this->Screens.MenuUI;
     this->GameEngine->isPlaying = false;
 }

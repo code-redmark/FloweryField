@@ -3,7 +3,7 @@
 #include <cmath>
 
 FloweryGrid::FloweryGrid(sf::Vector2f WindowSize, sf::Vector2i WindowPos, sf::Vector2i GameSize) 
-    :   GridShape(sf::RectangleShape({500.f, 500.f})) 
+    :   GridShape(sf::RectangleShape({500.f, 500.f})), CurrentGameSize(GameSize)
     {
         sf::Vector2f WindowCenter = {WindowSize.x/2, WindowSize.y/2};
 
@@ -18,9 +18,20 @@ FloweryGrid::FloweryGrid(sf::Vector2f WindowSize, sf::Vector2i WindowPos, sf::Ve
 
         this->GridShape.setPosition({WindowCenter.x - ShapeSize.x/2, WindowCenter.y - ShapeSize.y/2});
 
-        this->ReloadGrid(GameSize);
+        this->ReloadGrid(this->CurrentGameSize);
     }
 
+sf::Vector2f FloweryGrid::getSize() {
+    return this->GridShape.getSize();
+}
+
+void FloweryGrid::setPosition(sf::Vector2f position) {
+    this->GridShape.setPosition(position);
+}
+
+sf::Vector2f FloweryGrid::getPosition() {
+    return this->GridShape.getPosition();
+}
 
 void FloweryGrid::ReloadGrid(sf::Vector2i GameSize) {
     this->GridLines.clear();

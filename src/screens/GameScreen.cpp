@@ -11,6 +11,8 @@ GameScreen::GameScreen(Game &game)
     {
         sf::Vector2f WindowCenter = {game.GetWindowSize().x/2, game.GetWindowSize().y/2};
         
+        GridUI.setPosition({WindowCenter.x - GridUI.getSize().x/2, WindowCenter.y - GridUI.getSize().y/2});
+
         Quit.setPosition({static_cast<float>(WindowCenter.x * 1.5 - 10), static_cast<float>(10)});
         
         Quit.MB1action = [&game](){ game.BackToMenuAction(); };
@@ -21,7 +23,7 @@ GameScreen::GameScreen(Game &game)
 
 void GameScreen::OnMB1(sf::RenderWindow &GameWindow) {
     sf::Vector2f MousePosition = {static_cast<float>(sf::Mouse::getPosition(GameWindow).x), static_cast<float>(sf::Mouse::getPosition(GameWindow).y)};
-    std::cout << MousePosition.x << " " << MousePosition.y << "\n";
+    std::cout << "left click " << MousePosition.x << " " << MousePosition.y << "\n";
 
     if (this->GridUI.contains(MousePosition)) {
         this->game.RevealClick(this->GridUI.ScreenPosToCell({MousePosition.x, MousePosition.y}));
@@ -32,7 +34,15 @@ void GameScreen::OnMB1(sf::RenderWindow &GameWindow) {
     }
 }
 
-void GameScreen::OnMB2() {}
+void GameScreen::OnMB2(sf::RenderWindow &GameWindow) {
+    sf::Vector2f MousePosition = {static_cast<float>(sf::Mouse::getPosition(GameWindow).x), static_cast<float>(sf::Mouse::getPosition(GameWindow).y)};
+    std::cout << "right click" << MousePosition.x << " " << MousePosition.y << "\n";
+
+    if (this->GridUI.contains(MousePosition)) {
+
+    }
+
+}
 
 void GameScreen::HandleEvents(sf::RenderWindow &GameWindow) {
     FloweryScreen::HandleEvents(GameWindow);

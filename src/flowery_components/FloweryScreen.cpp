@@ -20,7 +20,7 @@ void FloweryScreen::HandleEvents(sf::RenderWindow &GameWindow) { // Base events
             if (click->button == sf::Mouse::Button::Left) {
                 this->OnMB1(GameWindow);
             } else if (click->button == sf::Mouse::Button::Right) {
-                this->OnMB2();
+                this->OnMB2(GameWindow);
             }
         }
     }

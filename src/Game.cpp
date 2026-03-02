@@ -1,9 +1,5 @@
 #include "Game.hpp"
 
-
-ScreenCollection::ScreenCollection(Game &game) 
-    :   game(game), MenuUI(MenuScreen(game)), GameUI(GameScreen(game)) {}
-
 Game::Game() 
     :   Window(sf::RenderWindow(sf::VideoMode({1366, 768}), "Flowery Field++", sf::Style::Titlebar | sf::Style::Close)),
         GameEngine(nullptr), // Initialized when play is pressed
@@ -56,13 +52,18 @@ void Game::RevealClick(sf::Vector2i CellPosition) {
     }
 
     CellData data = this->GameEngine->GetCellData(CellPosition);
+    if (data.revealed) return;
+
     if (data.isBomb == false) {
         std::cout << "not a bomb. " << data.around << " bombs around\n";
     } else {
         ResourcesHandler.alarm.play(); 
-        std::cout << "clicked a bomb!\n " << data.around << " bombs around\n";
-        // Show bombs
-        // Getbombs (need to save bombs in an array)
+        for (sf::Sprite bombSprite : this->Screens.GameUI.GridUI.BombSprites) {
+            bombSprite.setColor(sf::Color::White);
+        }
+
+        this->CurrentScreen = &this->Screens.Loss;
+        this->GameEngine->isPlaying = false;
     }
 }
 
