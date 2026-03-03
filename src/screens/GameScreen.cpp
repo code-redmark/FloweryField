@@ -23,7 +23,6 @@ GameScreen::GameScreen(Game &game)
 
 void GameScreen::OnMB1(sf::RenderWindow &GameWindow) {
     sf::Vector2f MousePosition = {static_cast<float>(sf::Mouse::getPosition(GameWindow).x), static_cast<float>(sf::Mouse::getPosition(GameWindow).y)};
-    std::cout << "left click " << MousePosition.x << " " << MousePosition.y << "\n";
 
     if (this->GridUI.contains(MousePosition)) {
         this->game.RevealClick(this->GridUI.ScreenPosToCell({MousePosition.x, MousePosition.y}));
@@ -36,7 +35,6 @@ void GameScreen::OnMB1(sf::RenderWindow &GameWindow) {
 
 void GameScreen::OnMB2(sf::RenderWindow &GameWindow) {
     sf::Vector2f MousePosition = {static_cast<float>(sf::Mouse::getPosition(GameWindow).x), static_cast<float>(sf::Mouse::getPosition(GameWindow).y)};
-    std::cout << "right click" << MousePosition.x << " " << MousePosition.y << "\n";
 
     if (this->GridUI.contains(MousePosition)) {
 

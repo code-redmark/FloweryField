@@ -38,6 +38,8 @@ sf::Vector2f FloweryGrid::getPosition() {
 
 void FloweryGrid::ReloadGrid(sf::Vector2i GameSize) {
     this->GridLines.clear();
+    this->BombSprites.clear();
+    this->RevealedCells.clear();
 
     cellLength = this->GridShape.getSize().x/GameSize.x;
     cellHeight = this->GridShape.getSize().y/GameSize.y;
@@ -50,7 +52,7 @@ void FloweryGrid::ReloadGrid(sf::Vector2i GameSize) {
     Vertical.setFillColor(sf::Color(15, 15, 15, 255));
     Horizontal.setFillColor(sf::Color(15, 15, 15, 255));
 
-    for (int x = 0; x < GameSize.x - 1; x++) { // - 1 cause we dont want the last line
+    for (int x = 0; x < GameSize.x - 1; x++) {
         sf::RectangleShape Vline(Vertical);  
         Vline.setPosition({(this->GridShape.getPosition().x + (cellLength * (x + 1))), this->GridShape.getPosition().y});
         this->GridLines.push_back(Vline);
@@ -72,13 +74,13 @@ sf::Vector2i FloweryGrid::ScreenPosToCell(sf::Vector2f pos) {
     float Xdistance = abs(pos.x - this->GridShape.getPosition().x);
     float Ydistance = abs(pos.y - this->GridShape.getPosition().y);
 
-    return {static_cast<int>(Xdistance/this->cellLength), static_cast<int>(Ydistance/this->cellHeight + 1)};
+    return {static_cast<int>(Xdistance/this->cellLength), static_cast<int>(Ydistance/this->cellHeight)};
 }
 
 void FloweryGrid::AddRevealed(sf::Vector2i CellPosition, int around) {
     // Top left X coordinate of the cell on the screen
     float ScreenX = this->GridShape.getPosition().x + CellPosition.x * this->cellLength; 
-    float ScreenY = this->GridShape.getPosition().y + (CellPosition.y - 1) * this->cellHeight;
+    float ScreenY = this->GridShape.getPosition().y + CellPosition.y * this->cellHeight;
     sf::Text aroundText(ResourcesHandler.BaseFont, "");
     if (around != 0) {
         aroundText.setString(std::to_string(around));

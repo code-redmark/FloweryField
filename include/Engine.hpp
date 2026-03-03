@@ -27,8 +27,6 @@ class Engine { // Game logic class
     int bombDensity; // Bombs/Cell percentage (1-100)
 
     std::vector<CellData> grid;
-    
-    std::array<sf::Vector2i, 8> GetAround(sf::Vector2i pos); // Get positions around given x and y position on grid
 
     public:
     Engine(sf::Vector2i size);

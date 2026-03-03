@@ -15,24 +15,28 @@ Engine::Engine(sf::Vector2i size)
         std::random_device device;
         std::mt19937 generator(device());
 
-        std::uniform_int_distribution posDist(0, GridSize.x * GridSize.y - 1);
+        std::uniform_int_distribution posDist(0, (GridSize.x * GridSize.y - 1));
 
         int bombAmount = static_cast<int>(size.x * size.y / 100.f * bombDensity);
         std::cout << bombAmount << "\n";
         for (int i = 0; i < bombAmount; i++) {
             int newBomb = posDist(generator);
+            if (this->grid[newBomb].isBomb == true) continue;
             this->grid[newBomb].isBomb = true;
+
+            // increment around integer for every cell around the bomb
+            for (int xOffset = -1; xOffset <= 1; xOffset++) {
+                for (int yOffset = -1; yOffset <= 1; yOffset++) {
+                    int aroundIndex = newBomb + (this->GridSize.x * yOffset) + xOffset;
+                    if (aroundIndex != newBomb && (aroundIndex >= 0 && aroundIndex < 80))
+                        this->grid[aroundIndex].around += 1;
+                }
+            }
+
             this->bombs.push_back(newBomb);
 
-            std::array<sf::Vector2i, 8> around = GetAround(itop(newBomb, size.x));
-            for (sf::Vector2i cellPos : around) {
-
-                int index = ptoi(cellPos, size.x);
-                if (index < 0 || index >= this->grid.size()) continue;
-            
-                this->grid[ptoi(cellPos, size.x)].around += 1;
-            }
         }
+
         std::cout << "Engine done\nBombs: ";
         for (int index : this->bombs) {
             std::cout << index << ", ";
@@ -46,19 +50,6 @@ CellData Engine::GetCellData(sf::Vector2i pos) {
     return this->grid[ptoi(pos, this->getGridSize().x)];
 }
 
-std::array<sf::Vector2i, 8> Engine::GetAround(sf::Vector2i pos) {
-    std::array<sf::Vector2i, 8> around;
-    int i = 0;
-    for (int yOffset = -1; yOffset <= 1; yOffset++) {
-        for (int xOffset = -1; xOffset <= 1; xOffset++) {
-            if (xOffset == 0 && yOffset == 0) continue;
-            around[i] = {pos.x + xOffset, pos.y + yOffset};
-            i++;
-        }
-    }
-    return around;
-}
-
 sf::Vector2i Engine::getGridSize() {
     return this->GridSize;
 }
@@ -68,6 +59,6 @@ sf::Vector2i itop(int index, int width) {
 }
 
 int ptoi(sf::Vector2i coords, int width) {
-    return width * (coords.y - 1) + coords.x;
+    return width * coords.y + coords.x;
 }
 

@@ -8,8 +8,8 @@ void Game::NewGameAction() {
         ResourcesHandler.alarm.stop();
         this->GameEngine = std::make_unique<Engine>(Engine({9, 9})); // TODO : add new screen to select grid size (difficulty)
         this->GameEngine->isPlaying = true;
-
         this->Screens.GameUI.GridUI.ReloadGrid(GameEngine->getGridSize());
+        
 
         this->CurrentScreen = &this->Screens.GameUI;
     }
@@ -23,5 +23,6 @@ void Game::QuitAction() {
 void Game::BackToMenuAction() {
     ResourcesHandler.alarm.stop();
     this->CurrentScreen = &this->Screens.MenuUI;
+    this->Screens.GameUI.GridUI.ReloadGrid(GameEngine->getGridSize());
     this->GameEngine->isPlaying = false;
 }

@@ -52,19 +52,22 @@ void Game::RevealClick(sf::Vector2i CellPosition) {
     }
 
     CellData data = this->GameEngine->GetCellData(CellPosition);
+    
     if (data.revealed) return;
 
     if (data.isBomb == false) {
-        std::cout << "not a bomb. " << data.around << " bombs around\n";
+        std::cout << "not a bomb. " << data.around << " bombs around:\n";
         this->Screens.GameUI.GridUI.AddRevealed(CellPosition, data.around);
+        this->GameEngine->grid[ptoi(CellPosition, this->GameEngine->getGridSize().x)].revealed = true;
     } else {
-        ResourcesHandler.alarm.play(); 
+        std::cout << "bomb!\n";
+        //ResourcesHandler.alarm.play(); 
         for (sf::Sprite bombSprite : this->Screens.GameUI.GridUI.BombSprites) {
             bombSprite.setColor(sf::Color::White);
         }
 
-        this->CurrentScreen = &this->Screens.Loss;
-        this->GameEngine->isPlaying = false;
+        // this->CurrentScreen = &this->Screens.Loss;
+        // this->GameEngine->isPlaying = false;
     }
 }
 

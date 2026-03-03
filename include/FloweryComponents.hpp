@@ -74,7 +74,7 @@ class FloweryGrid {
     void setPosition(sf::Vector2f position);
     sf::Vector2f getPosition();
 
-    void ReloadGrid(sf::Vector2i GameSize); // Reinitializes the grid's shape
+    void ReloadGrid(sf::Vector2i GameSize); // Reinitializes the grid's interface
     
     bool contains(sf::Vector2f pos);
     sf::Vector2i ScreenPosToCell(sf::Vector2f pos); // Returns the coordinates of the cell in a specific position on the grid, its used by GameEngine to know which cell to reveal/flag
