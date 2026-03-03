@@ -9,8 +9,6 @@ class Game;
 
 #include <bits/stdc++.h>
 
-
-
 class FloweryScreen { // Base screen class, doesn't show anything        
     protected:
     Game &game;
@@ -34,7 +32,6 @@ class FloweryLabel {
     void setPosition(sf::Vector2f position);
     
     sf::Vector2f getSize();
-    void setSize();
     
     FloweryLabel(sf::RectangleShape shape, sf::Text text);
     FloweryLabel(sf::RectangleShape shape, sf::Text text, sf::Color FillColor);
@@ -63,7 +60,7 @@ class FloweryGrid {
     float cellHeight;
 
     sf::RectangleShape RevealedTemplate; // Revealed cell RectangleShape
-    std::vector<sf::RectangleShape> RevealedCells;
+    std::vector<FloweryLabel> RevealedCells;
 
     std::vector<sf::Sprite> BombSprites;
 
@@ -82,7 +79,7 @@ class FloweryGrid {
     bool contains(sf::Vector2f pos);
     sf::Vector2i ScreenPosToCell(sf::Vector2f pos); // Returns the coordinates of the cell in a specific position on the grid, its used by GameEngine to know which cell to reveal/flag
 
-    void AddRevealed(sf::Vector2i CellPosition); // Creates a revealed cell rectangle at specified position
+    void AddRevealed(sf::Vector2i CellPosition, int around); // Creates a revealed cell rectangle at specified position
 
     friend Game;
 };

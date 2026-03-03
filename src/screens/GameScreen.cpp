@@ -50,10 +50,9 @@ void GameScreen::HandleEvents(sf::RenderWindow &GameWindow) {
 } 
 
 void GameScreen::Draw() {
-    this->game.drawFloweryButton(this->Quit);
+    this->game.drawFloweryLabel(&this->Quit);
     this->game.drawLabel(this->ClockUI);
     this->game.drawFloweryGrid(this->GridUI);
-    //this->game.drawFloweryButton(this->CellUI);
 }
 
 

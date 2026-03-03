@@ -31,8 +31,8 @@ MenuScreen::MenuScreen(Game &game)
 
 void MenuScreen::Draw() {
     this->game.drawLabel(this->GameTitle);
-    this->game.drawFloweryButton(this->Play);
-    this->game.drawFloweryButton(this->Exit);
+    this->game.drawFloweryLabel(&this->Play);
+    this->game.drawFloweryLabel(&this->Exit);
 }
 
 void MenuScreen::OnMB1(sf::RenderWindow &GameWindow) {

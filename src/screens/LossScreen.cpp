@@ -40,8 +40,8 @@ void LossScreen::OnMB1(sf::RenderWindow &GameWindow) {
 }
 
 void LossScreen::Draw() {
-    this->game.drawFloweryButton(this->Menu);
-    this->game.drawFloweryButton(this->PlayAgain);
+    this->game.drawFloweryLabel(&this->Menu);
+    this->game.drawFloweryLabel(&this->PlayAgain);
     this->game.drawLabel(this->YouLose);
     this->game.drawFloweryGrid(this->grid);
 }

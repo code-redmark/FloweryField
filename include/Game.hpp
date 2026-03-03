@@ -52,7 +52,7 @@ class Game {
     void FlagClick(sf::Vector2i CellPosition);
 
     void drawLabel(sf::Text &label);
-    void drawFloweryButton(FloweryButton &button);
+    void drawFloweryLabel(FloweryLabel *label);
     void drawFloweryGrid(FloweryGrid &grid);
 
     Game();

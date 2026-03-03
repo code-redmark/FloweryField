@@ -1,6 +1,7 @@
-#include "FloweryComponents.hpp"
+#include "Game.hpp"
 
 #include <cmath>
+#include <string>
 
 FloweryGrid::FloweryGrid(sf::Vector2f WindowSize, sf::Vector2i WindowPos, sf::Vector2i GameSize) 
     :   GridShape(sf::RectangleShape({500.f, 500.f})), CurrentGameSize(GameSize), RevealedTemplate(sf::RectangleShape({0.f,0.f}))
@@ -74,12 +75,42 @@ sf::Vector2i FloweryGrid::ScreenPosToCell(sf::Vector2f pos) {
     return {static_cast<int>(Xdistance/this->cellLength), static_cast<int>(Ydistance/this->cellHeight + 1)};
 }
 
-void FloweryGrid::AddRevealed(sf::Vector2i CellPosition) {
+void FloweryGrid::AddRevealed(sf::Vector2i CellPosition, int around) {
     // Top left X coordinate of the cell on the screen
     float ScreenX = this->GridShape.getPosition().x + CellPosition.x * this->cellLength; 
     float ScreenY = this->GridShape.getPosition().y + (CellPosition.y - 1) * this->cellHeight;
-
-    sf::RectangleShape RevealedCell = sf::RectangleShape(this->RevealedTemplate);
+    sf::Text aroundText(ResourcesHandler.BaseFont, "");
+    if (around != 0) {
+        aroundText.setString(std::to_string(around));
+        switch (around) {
+            case 1:
+            aroundText.setFillColor(sf::Color::Red);
+            break;
+            case 2:
+            aroundText.setFillColor(sf::Color::Green);
+            break;
+            case 3:
+            aroundText.setFillColor(sf::Color::Blue);
+            break;
+            case 4:
+            aroundText.setFillColor(sf::Color::Cyan);
+            break;
+            case 5:
+            aroundText.setFillColor(sf::Color::Black);
+            break;
+            case 6:
+            aroundText.setFillColor(sf::Color::Yellow);
+            break;
+            case 7:
+            aroundText.setFillColor(sf::Color::Magenta);
+            break;
+            case 8:
+            aroundText.setFillColor(sf::Color(128, 64, 255));
+            break;
+        }
+    }
+    
+    FloweryLabel RevealedCell = FloweryLabel(this->RevealedTemplate, aroundText);
     RevealedCell.setPosition({ScreenX, ScreenY});
     this->RevealedCells.push_back(RevealedCell);
 }

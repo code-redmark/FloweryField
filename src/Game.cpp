@@ -56,7 +56,7 @@ void Game::RevealClick(sf::Vector2i CellPosition) {
 
     if (data.isBomb == false) {
         std::cout << "not a bomb. " << data.around << " bombs around\n";
-        this->Screens.GameUI.GridUI.AddRevealed(CellPosition);
+        this->Screens.GameUI.GridUI.AddRevealed(CellPosition, data.around);
     } else {
         ResourcesHandler.alarm.play(); 
         for (sf::Sprite bombSprite : this->Screens.GameUI.GridUI.BombSprites) {
@@ -75,9 +75,9 @@ void Game::drawLabel(sf::Text &label) {
     this->Window.draw(label); // Drawing single item for debugging, need to use a list
 }
 
-void Game::drawFloweryButton(FloweryButton &button) {
-    this->Window.draw(button.shape);
-    this->Window.draw(button.label);
+void Game::drawFloweryLabel(FloweryLabel *label) {
+    this->Window.draw(label->shape);
+    this->Window.draw(label->label);
 }
 
 void Game::drawFloweryGrid(FloweryGrid &grid) {
@@ -85,7 +85,7 @@ void Game::drawFloweryGrid(FloweryGrid &grid) {
     for (sf::RectangleShape line : grid.GridLines) {
         this->Window.draw(line);
     }
-    for (sf::RectangleShape revealedCell : grid.RevealedCells) {
-        this->Window.draw(revealedCell);
+    for (FloweryLabel revealedCell : grid.RevealedCells) {
+        this->drawFloweryLabel(&revealedCell);
     }
 }
