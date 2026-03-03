@@ -53,14 +53,17 @@ class FloweryButton {
 class FloweryGrid {
     private:
     sf::Vector2i CurrentGameSize;
-    int cellLength;
-    int cellHeight;
+    float cellLength;
+    float cellHeight;
+
+    sf::RectangleShape RevealedTemplate; // Revealed cell RectangleShape
+    std::vector<sf::RectangleShape> RevealedCells;
+
+    std::vector<sf::Sprite> BombSprites;
 
     sf::RectangleShape GridShape;
     std::vector<sf::RectangleShape> GridLines;
 
-    std::vector<sf::Sprite> BombSprites;
-    
     public:
     FloweryGrid(sf::Vector2f WindowSize, sf::Vector2i WindowPos, sf::Vector2i GameSize);
     
@@ -68,12 +71,12 @@ class FloweryGrid {
     void setPosition(sf::Vector2f position);
     sf::Vector2f getPosition();
 
-
     void ReloadGrid(sf::Vector2i GameSize); // Reinitializes the grid's shape
     
     bool contains(sf::Vector2f pos);
     sf::Vector2i ScreenPosToCell(sf::Vector2f pos); // Returns the coordinates of the cell in a specific position on the grid, its used by GameEngine to know which cell to reveal/flag
 
+    void AddRevealed(sf::Vector2i CellPosition); // Creates a revealed cell rectangle at specified position
 
     friend Game;
 };

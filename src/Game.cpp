@@ -56,6 +56,7 @@ void Game::RevealClick(sf::Vector2i CellPosition) {
 
     if (data.isBomb == false) {
         std::cout << "not a bomb. " << data.around << " bombs around\n";
+        this->Screens.GameUI.GridUI.AddRevealed(CellPosition);
     } else {
         ResourcesHandler.alarm.play(); 
         for (sf::Sprite bombSprite : this->Screens.GameUI.GridUI.BombSprites) {
@@ -83,5 +84,8 @@ void Game::drawFloweryGrid(FloweryGrid &grid) {
     this->Window.draw(grid.GridShape);
     for (sf::RectangleShape line : grid.GridLines) {
         this->Window.draw(line);
+    }
+    for (sf::RectangleShape revealedCell : grid.RevealedCells) {
+        this->Window.draw(revealedCell);
     }
 }

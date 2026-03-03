@@ -3,10 +3,10 @@
 #include <cmath>
 
 FloweryGrid::FloweryGrid(sf::Vector2f WindowSize, sf::Vector2i WindowPos, sf::Vector2i GameSize) 
-    :   GridShape(sf::RectangleShape({500.f, 500.f})), CurrentGameSize(GameSize)
+    :   GridShape(sf::RectangleShape({500.f, 500.f})), CurrentGameSize(GameSize), RevealedTemplate(sf::RectangleShape({0.f,0.f}))
     {
         sf::Vector2f WindowCenter = {WindowSize.x/2, WindowSize.y/2};
-
+        
         std::cout << "Gridsize: " << GameSize.x << ", " << GameSize.y << "\n";
 
         GridShape.setFillColor(sf::Color(45, 45, 45, 215));
@@ -17,6 +17,8 @@ FloweryGrid::FloweryGrid(sf::Vector2f WindowSize, sf::Vector2i WindowPos, sf::Ve
         std::cout << ShapeSize.x << "\n";
 
         this->GridShape.setPosition({WindowCenter.x - ShapeSize.x/2, WindowCenter.y - ShapeSize.y/2});
+
+        this->RevealedTemplate.setFillColor(sf::Color(200, 200, 200, 215));
 
         this->ReloadGrid(this->CurrentGameSize);
     }
@@ -39,6 +41,8 @@ void FloweryGrid::ReloadGrid(sf::Vector2i GameSize) {
     cellLength = this->GridShape.getSize().x/GameSize.x;
     cellHeight = this->GridShape.getSize().y/GameSize.y;
 
+    this->RevealedTemplate.setSize({cellLength, cellHeight});
+    
     sf::RectangleShape Vertical({6.f, this->GridShape.getSize().y});
     sf::RectangleShape Horizontal({this->GridShape.getSize().x, 6.f});
 
@@ -68,4 +72,14 @@ sf::Vector2i FloweryGrid::ScreenPosToCell(sf::Vector2f pos) {
     float Ydistance = abs(pos.y - this->GridShape.getPosition().y);
 
     return {static_cast<int>(Xdistance/this->cellLength), static_cast<int>(Ydistance/this->cellHeight + 1)};
+}
+
+void FloweryGrid::AddRevealed(sf::Vector2i CellPosition) {
+    // Top left X coordinate of the cell on the screen
+    float ScreenX = this->GridShape.getPosition().x + CellPosition.x * this->cellLength; 
+    float ScreenY = this->GridShape.getPosition().y + (CellPosition.y - 1) * this->cellHeight;
+
+    sf::RectangleShape RevealedCell = sf::RectangleShape(this->RevealedTemplate);
+    RevealedCell.setPosition({ScreenX, ScreenY});
+    this->RevealedCells.push_back(RevealedCell);
 }
