@@ -6,8 +6,8 @@ class Game;
 LossScreen::LossScreen(Game &game, FloweryGrid grid)
     : FloweryScreen(game),
         grid(grid),
-        Menu(FloweryButton(sf::RectangleShape({200.f, 100.f}), sf::Text(ResourcesHandler.BaseFont, "Quit"), sf::Color(255, 0, 0, 255))),
-        PlayAgain(FloweryButton(sf::RectangleShape({400.f, 100.f}), sf::Text(ResourcesHandler.BaseFont, "Play Again"), sf::Color(0, 200, 20, 255))),
+        Menu(FloweryButton(FloweryLabel(sf::RectangleShape({200.f, 100.f}), sf::Text(ResourcesHandler.BaseFont, "Quit"), sf::Color(255, 0, 0, 255)))),
+        PlayAgain(FloweryButton(FloweryLabel(sf::RectangleShape({400.f, 100.f}), sf::Text(ResourcesHandler.BaseFont, "Play Again"), sf::Color(0, 200, 20, 255)))),
         YouLose(sf::Text(ResourcesHandler.BaseFont, "You Lost!"))
     {
         sf::Vector2f WindowSize = game.GetWindowSize();

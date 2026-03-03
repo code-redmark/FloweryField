@@ -6,7 +6,7 @@ class Game;
 GameScreen::GameScreen(Game &game)
     : FloweryScreen(game),
         GridUI(FloweryGrid(game.GetWindowSize(), {0,0}, {0,0})),
-        Quit(FloweryButton(sf::RectangleShape({200.f, 100.f}), sf::Text(ResourcesHandler.BaseFont, "Menu"), sf::Color(255, 0, 0, 255))),
+        Quit(FloweryButton(FloweryLabel(sf::RectangleShape({200.f, 100.f}), sf::Text(ResourcesHandler.BaseFont, "Menu"), sf::Color(255, 0, 0, 255)))),
         ClockUI(sf::Text(ResourcesHandler.BaseFont, "clock"))
     {
         sf::Vector2f WindowCenter = {game.GetWindowSize().x/2, game.GetWindowSize().y/2};

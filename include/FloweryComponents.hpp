@@ -24,30 +24,36 @@ class FloweryScreen { // Base screen class, doesn't show anything
     virtual void Draw();
 };
 
-
-
-class FloweryButton {
-    private: 
-    sf::Text label;
+class FloweryLabel {
+    protected:
     sf::RectangleShape shape;
+    sf::Text label;
     
     public:
-    FloweryButton(sf::RectangleShape shape, sf::Text text); // Makes a white button
-    FloweryButton(sf::RectangleShape shape, sf::Text text, sf::Color FillColor); // Makes a button of given fill color
-    FloweryButton(sf::RectangleShape shape, sf::Text, sf::Color FillColor, sf::Color OutlineColor); // Makes a button of given fill color and outline color
-    
-    void setPosition(sf::Vector2f position);
     sf::Vector2f getPosition();
+    void setPosition(sf::Vector2f position);
     
-    bool contains(sf::Vector2f pos);
+    sf::Vector2f getSize();
+    void setSize();
+    
+    FloweryLabel(sf::RectangleShape shape, sf::Text text);
+    FloweryLabel(sf::RectangleShape shape, sf::Text text, sf::Color FillColor);
+    FloweryLabel(sf::RectangleShape shape, sf::Text text, sf::Color FillColor, sf::Color OutlineColor);
+
+    friend Game;
+};
+
+
+class FloweryButton : public FloweryLabel {
+    public:
+    FloweryButton(FloweryLabel label);
 
     std::function<void()> MB1action;
     std::function<void()> MB2action;
 
-    sf::Vector2f getSize();
+    bool contains(sf::Vector2f pos);
 
     friend Game;
-
 };
 
 class FloweryGrid {
