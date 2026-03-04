@@ -32,6 +32,8 @@ class Engine { // Game logic class
     Engine(sf::Vector2i size);
     CellData GetCellData(sf::Vector2i pos);
 
+    std::pair<std::array<int, 8>, int>GetAround(sf::Vector2i CellPosition); // Returns an array containing the indices of the cells adjacent to the given cell
+
     sf::Vector2i getGridSize();
     
     friend class Game;

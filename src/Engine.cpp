@@ -18,22 +18,19 @@ Engine::Engine(sf::Vector2i size)
         std::uniform_int_distribution posDist(0, (GridSize.x * GridSize.y - 1));
 
         int bombAmount = static_cast<int>(size.x * size.y / 100.f * bombDensity);
-        std::cout << bombAmount << "\n";
+        std::cout << "bombs: " << bombAmount << "\n";
         for (int i = 0; i < bombAmount; i++) {
             int newBomb = posDist(generator);
             if (this->grid[newBomb].isBomb == true) continue;
             this->grid[newBomb].isBomb = true;
 
-            // increment around integer for every cell around the bomb
-            for (int xOffset = -1; xOffset <= 1; xOffset++) {
-                for (int yOffset = -1; yOffset <= 1; yOffset++) {
-                    int aroundIndex = newBomb + (this->GridSize.x * yOffset) + xOffset;
-                    if (aroundIndex != newBomb && (aroundIndex >= 0 && aroundIndex < 80))
-                        this->grid[aroundIndex].around += 1;
-                }
-            }
+            sf::Vector2i toPos = itop(newBomb, this->GridSize.x);
+            std::cout << "Around " << newBomb << "\n";
+            std::pair<std::array<int, 8>, int> around = this->GetAround(toPos);
 
-            this->bombs.push_back(newBomb);
+            for (int i = 0; i < around.second; i++) {
+                this->grid[around.first[i]].around += 1;
+            }
 
         }
 
@@ -48,6 +45,33 @@ CellData Engine::GetCellData(sf::Vector2i pos) {
     std::cout << "Gathering " << ptoi(pos, this->getGridSize().x) << "\n";
 
     return this->grid[ptoi(pos, this->getGridSize().x)];
+}
+
+std::pair<std::array<int, 8>, int> Engine::GetAround(sf::Vector2i CellPosition) {
+    std::array<int, 8> around;
+    int size = 0;
+    for (int xOffset = -1; xOffset <= 1; xOffset++) {
+        for (int yOffset = -1; yOffset <= 1; yOffset++) {
+            int aroundX = CellPosition.x + xOffset;
+            int aroundY = CellPosition.y + yOffset;
+            if (aroundX == CellPosition.x && aroundY == CellPosition.y) {
+                continue;
+            }
+
+            int aroundIndex = ptoi({aroundX, aroundY}, this->GridSize.x);
+            if ((aroundX >= this->GridSize.x || aroundX < 0) || (aroundY >= this->GridSize.y || aroundY < 0)) {
+                std::cout << aroundIndex << " is invalid \n";
+                continue;
+            } else {
+                std::cout << aroundIndex << "is around " << ptoi(CellPosition, this->GridSize.x) << "\n";
+                around[size] = aroundIndex;
+                size++;
+            }
+        }
+    }
+
+    std::cout << "\n\n";
+    return std::make_pair(around, size);
 }
 
 sf::Vector2i Engine::getGridSize() {
