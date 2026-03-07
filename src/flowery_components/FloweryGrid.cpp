@@ -77,6 +77,15 @@ sf::Vector2i FloweryGrid::ScreenPosToCell(sf::Vector2f pos) {
     return {static_cast<int>(Xdistance/this->cellLength), static_cast<int>(Ydistance/this->cellHeight)};
 }
 
+sf::Vector2f FloweryGrid::CellToScreenPos(sf::Vector2i cellCoords) {
+    sf::Vector2f GridPos = this->GridShape.getPosition();
+
+    float TopLeftX = GridPos.x + (cellCoords.x * this->cellLength);
+    float TopLeftY = GridPos.y + (cellCoords.y * this->cellHeight);
+    
+    return {TopLeftX, TopLeftY};
+}
+
 void FloweryGrid::AddRevealed(sf::Vector2i CellPosition, int around) {
     // Top left X coordinate of the cell on the screen
     float ScreenX = this->GridShape.getPosition().x + CellPosition.x * this->cellLength; 
@@ -115,4 +124,12 @@ void FloweryGrid::AddRevealed(sf::Vector2i CellPosition, int around) {
     FloweryLabel RevealedCell = FloweryLabel(this->RevealedTemplate, aroundText);
     RevealedCell.setPosition({ScreenX, ScreenY});
     this->RevealedCells.push_back(RevealedCell);
+}
+
+void FloweryGrid::ShowBombs(std::vector<sf::Vector2i> bombs) {
+    for (sf::Vector2i position : bombs) {
+        sf::Sprite newBomb(ResourcesHandler.BombIcon);
+        newBomb.setPosition(this->CellToScreenPos(position));
+        this->BombSprites.push_back(newBomb);
+    }
 }

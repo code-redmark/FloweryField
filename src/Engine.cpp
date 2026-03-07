@@ -10,7 +10,11 @@ Engine::Engine(sf::Vector2i size)
     : GridSize(size), bombDensity(12) 
     {
         std::cout << "Reinitializing engine with: " << size.x << ", " << size.y << "\n";
-        grid.resize(GridSize.x * GridSize.y, CellData());
+
+        grid.clear();
+        for (int i = 0; i < GridSize.x * GridSize.y; i++) {
+            grid.push_back(CellData(itop(i, this->GridSize.x)));
+        }   
 
         std::random_device device;
         std::mt19937 generator(device());
@@ -18,7 +22,7 @@ Engine::Engine(sf::Vector2i size)
         std::uniform_int_distribution posDist(0, (GridSize.x * GridSize.y - 1));
 
         int bombAmount = static_cast<int>(size.x * size.y / 100.f * bombDensity);
-        std::cout << "bombs: " << bombAmount << "\n";
+
         for (int i = 0; i < bombAmount; i++) {
             int newBomb = posDist(generator);
             if (this->grid[newBomb].isBomb == true) continue;
@@ -32,12 +36,9 @@ Engine::Engine(sf::Vector2i size)
                 this->grid[around.first[i]].around += 1;
             }
 
+            this->bombs.push_back(itop(newBomb, this->GridSize.x));
         }
 
-        std::cout << "Engine done\nBombs: ";
-        for (int index : this->bombs) {
-            std::cout << index << ", ";
-        }
         std::cout << "\n";
     }
 

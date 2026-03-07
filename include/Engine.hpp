@@ -6,15 +6,30 @@ class FloweryButton;
 
 #include <vector>
 
+/**
+ * CellData is used to group every cell's specific data,
+ * and more specifically its used by the main Game class to
+ * update the game UI
+ */
 struct CellData {
+    sf::Vector2i Position;
+
     bool revealed = false;
     bool isBomb = false;
     int around = 0;
+
+    CellData(sf::Vector2i CellPosition) : Position(CellPosition) {};
 };
 
-class Engine { // Game logic class
+
+
+/**
+ * The engine class contains all the logic gamestate
+ * and functions
+ */
+class Engine {
     private:
-    std::vector<int> bombs;
+    std::vector<sf::Vector2i> bombs;
 
     bool isPlaying = false;
     
@@ -41,6 +56,15 @@ class Engine { // Game logic class
 };
 
 
+/**
+ * turns index of any unidimensional array's item into
+ * a 2D position
+ */
+sf::Vector2i itop(int index, int width); 
 
-sf::Vector2i itop(int index, int width); // index to X and Y position in grid vector
+/**
+ * turns position of any 2D array's item into
+ * a 1D index
+ */
+
 int ptoi(sf::Vector2i coords, int width); // X and Y position to index in grid vector

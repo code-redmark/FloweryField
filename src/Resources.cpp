@@ -1,4 +1,3 @@
-// Fill resources class with all types of assets (pictures, fonts etc.)
 #include "Resources.hpp"
 
 #include <iostream>
@@ -14,8 +13,13 @@ Resources::Resources()
     }
     if (this->SoundBuff.loadFromFile(std::filesystem::path("assets/alarm.wav")) == false ) {
         std::cerr << "Error loading alarm sound\n";
-    } else { 
-        std::cout << "loaded alarm\n";
+    }
+
+    if (this->FlagIcon.loadFromFile(std::filesystem::path("assets/flower-flag.png")) == false) {
+        std::cerr << "Error loading flag icon\n";
+    }
+    if (this->BombIcon.loadFromFile(std::filesystem::path("assets/bomb.png")) == false) {
+        std::cerr << "Error loading bomb icon\n";
     }
 
 

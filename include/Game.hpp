@@ -14,7 +14,11 @@
 
 class FloweryScreen;
 
-
+/**
+ * Game is the main class that acts as a bridge between the screens, resources
+ * and the Engine, it has to handle the screen to be drawn at every moment
+ * and refreshes UI by getting data from the Engine, it also contains the main Window
+ */
 
 class Game {
     private:

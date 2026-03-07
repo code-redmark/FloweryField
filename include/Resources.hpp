@@ -8,11 +8,12 @@ struct Resources {
     sf::Font TitleFont;
     sf::Font BaseFont;
     sf::Font GameCounterFont;
-    sf::Image GameIcon;
-    sf::Image FlagIcon;
     sf::SoundBuffer SoundBuff;
 
     sf::Sound alarm;
+
+    sf::Texture FlagIcon;
+    sf::Texture BombIcon;
 
     Resources();
 };

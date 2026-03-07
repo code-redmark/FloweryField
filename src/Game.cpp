@@ -45,35 +45,6 @@ sf::Vector2i Game::GetEngineSize() {
     return this->GameEngine->getGridSize();
 }
 
-void Game::RevealClick(sf::Vector2i CellPosition) {
-    if (ptoi(CellPosition, this->GameEngine->GridSize.x) > this->GameEngine->grid.size()) {
-        std::cout << "Invalid cell position\n";
-        return;
-    }
-
-    CellData data = this->GameEngine->GetCellData(CellPosition);
-    
-    if (data.revealed) return;
-
-    if (data.isBomb == false) {
-        std::cout << "not a bomb. " << data.around << " bombs around:\n";
-        this->Screens.GameUI.GridUI.AddRevealed(CellPosition, data.around);
-        this->GameEngine->grid[ptoi(CellPosition, this->GameEngine->getGridSize().x)].revealed = true;
-    } else {
-        std::cout << "bomb!\n";
-        //ResourcesHandler.alarm.play(); 
-        for (sf::Sprite bombSprite : this->Screens.GameUI.GridUI.BombSprites) {
-            bombSprite.setColor(sf::Color::White);
-        }
-
-        // this->CurrentScreen = &this->Screens.Loss;
-        // this->GameEngine->isPlaying = false;
-    }
-}
-
-void Game::FlagClick(sf::Vector2i CellPosition) {}
-
-
 void Game::drawLabel(sf::Text &label) {
     this->Window.draw(label); // Drawing single item for debugging, need to use a list
 }
@@ -90,5 +61,8 @@ void Game::drawFloweryGrid(FloweryGrid &grid) {
     }
     for (FloweryLabel revealedCell : grid.RevealedCells) {
         this->drawFloweryLabel(&revealedCell);
+    }
+    for (sf::Sprite Bomb : grid.BombSprites) {
+        this->Window.draw(Bomb);
     }
 }
