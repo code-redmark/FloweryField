@@ -71,6 +71,15 @@ class FloweryButton : public FloweryLabel {
     friend Game;
 };
 
+/**
+ * FloweryGrid is another type of "button", it was made as a separate component
+ * to avoid having tens of FloweryButton and it is made up of a background sf::RectangleShape
+ * and some other, thin, RectangleShapes to make up the lines that are put on the background rectangle
+ * to make the lines of the grid. The grid takes care of checking whether a position on the screen
+ * is inside of the grid like FloweryButton and also translates any screen position inside of the grid
+ * to the game's grid 2D position to tell Game which cell the user has clicked to flag or reveal
+ */
+
 class FloweryGrid {
     private:
     sf::Vector2i CurrentGameSize;
@@ -101,8 +110,26 @@ class FloweryGrid {
      * during gameplay
      */
 
-    void ReloadGrid(sf::Vector2i GameSize);
+    void Reload(sf::Vector2i GameSize);
     
+    /**
+     * This is part of Reload() and it has been separated to be usable when
+     * we dont want the grid to be reset but to be moved or copied from somewhere else,
+     * the example of this type of usage is in the LossScreen constructor, we want to copy
+     * the grid and have it in another position and maybe even scale it so we need to reload 
+     * the lines
+     */
+    void ReloadLines(sf::Vector2i GameSize);
+
+    /**
+     * This is called by game after a bomb has been clicked and the
+     * player lost, the grid is updated by drawing all the bombs in place
+     * before being displayed in the You Loss screen
+     * 
+     * TODO: "PAINT" THE CLICKED BOMB'S CELL RED
+     */
+    void ShowBombs(std::vector<sf::Vector2i> bombs);
+
     /**
      * contains and ScreenPosToCell are used to check whether
      * the grid has been clicked (contains), and to get the
@@ -110,12 +137,18 @@ class FloweryGrid {
      * ScreenPosToCell's job)
      */
 
+    
 
     bool contains(sf::Vector2f pos);
 
     /**
      * Turns a screen position (that is inside of the grid's rectangle)
-     * into the grid's specific cell that the position is in
+     * into the grid's specific cell that the position is in, the secondary
+     * overload is used to tell the function to what GridPosition the returned 
+     * cell position is relative to, this is used to move the grid on the screen by
+     * preserving the position of the item (bomb, revealed rectangle, or a flag) before
+     * the GridShape is moved
+     *
      */
     sf::Vector2i ScreenPosToCell(sf::Vector2f ScreenPosition); 
 
@@ -124,7 +157,6 @@ class FloweryGrid {
      * corner of the given cell
      */
     sf::Vector2f CellToScreenPos(sf::Vector2i CellCoordinates);
-
 
     /**
      * The following are functions that run after input from
@@ -139,15 +171,6 @@ class FloweryGrid {
      * label to the amount of bombs around the cell
      */
     void AddRevealed(sf::Vector2i CellPosition, int around); 
-
-    /**
-     * This is called by game after a bomb has been clicked and the
-     * player lost, the grid is updated by drawing all the bombs in place
-     * before being displayed in the You Loss screen
-     * 
-     * TODO: "PAINT" THE CLICKED BOMB'S CELL RED
-     */
-    void ShowBombs(std::vector<sf::Vector2i> bombs);
 
     friend Game;
 };

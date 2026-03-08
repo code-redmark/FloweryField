@@ -20,6 +20,16 @@ void Game::GameLoop() {
 
 }
 
+void Game::Loss() {
+    LossScreen screen(*this, this->Screens.GameUI.GridUI);
+    this->Screens.Loss.Reload(this->Screens.GameUI.GridUI);
+    this->Screens.Loss.grid.ShowBombs(this->GameEngine->bombs);
+
+    this->CurrentScreen = &this->Screens.Loss;
+    this->GameEngine->isPlaying = false;
+
+}
+
 std::string Game::FlagsToString() {
     char buffer[3];
     sprintf(buffer, "%02d", this->GameEngine->flags);

@@ -21,7 +21,7 @@ FloweryGrid::FloweryGrid(sf::Vector2f WindowSize, sf::Vector2i WindowPos, sf::Ve
 
         this->RevealedTemplate.setFillColor(sf::Color(200, 200, 200, 215));
 
-        this->ReloadGrid(this->CurrentGameSize);
+        this->Reload(this->CurrentGameSize);
     }
 
 sf::Vector2f FloweryGrid::getSize() {
@@ -29,14 +29,25 @@ sf::Vector2f FloweryGrid::getSize() {
 }
 
 void FloweryGrid::setPosition(sf::Vector2f position) {
+    sf::Vector2f oldPosition = this->getPosition();
+
     this->GridShape.setPosition(position);
+    this->ReloadLines(this->CurrentGameSize);
+    
+    // Put revealed back in place
+    for (FloweryLabel &cell : this->RevealedCells) {
+        sf::Vector2f current = cell.getPosition();
+        sf::Vector2f newPos = {current.x + (position.x - oldPosition.x), current.y + (position.y - oldPosition.y)};
+        std::cout << "cell old pos: " << current.x << ", " << current.y << "\nnew pos: " << newPos.x << ", " << newPos.y << "\n";
+        cell.setPosition(newPos);
+    }
 }
 
 sf::Vector2f FloweryGrid::getPosition() {
     return this->GridShape.getPosition();
 }
 
-void FloweryGrid::ReloadGrid(sf::Vector2i GameSize) {
+void FloweryGrid::Reload(sf::Vector2i GameSize) {
     this->GridLines.clear();
     this->BombSprites.clear();
     this->RevealedCells.clear();
@@ -45,25 +56,32 @@ void FloweryGrid::ReloadGrid(sf::Vector2i GameSize) {
     cellHeight = this->GridShape.getSize().y/GameSize.y;
 
     this->RevealedTemplate.setSize({cellLength, cellHeight});
-    
+
+    this->CurrentGameSize = GameSize;
+
+    this->ReloadLines(GameSize);
+}
+
+void FloweryGrid::ReloadLines(sf::Vector2i GameSize) {
+    this->GridLines.clear();
+
     sf::RectangleShape Vertical({6.f, this->GridShape.getSize().y});
     sf::RectangleShape Horizontal({this->GridShape.getSize().x, 6.f});
 
     Vertical.setFillColor(sf::Color(15, 15, 15, 255));
     Horizontal.setFillColor(sf::Color(15, 15, 15, 255));
 
-    for (int x = 0; x < GameSize.x - 1; x++) {
+    for (int x = 0; x < GameSize.x - 1; x++) { // we dont want the line on the bottom of the last cell so we do Gamesize.x - 1
         sf::RectangleShape Vline(Vertical);  
         Vline.setPosition({(this->GridShape.getPosition().x + (cellLength * (x + 1))), this->GridShape.getPosition().y});
         this->GridLines.push_back(Vline);
     }
 
-    for (int y = 0; y < GameSize.y - 1; y++) {
+    for (int y = 0; y < GameSize.y - 1; y++) { // same thing for the condition as Vlines to not get the line on the right
         sf::RectangleShape Hline(Horizontal);
         Hline.setPosition({this->GridShape.getPosition().x, (this->GridShape.getPosition().y + (cellHeight * (y + 1)))});
         this->GridLines.push_back(Hline);
     }
-
 }
 
 bool FloweryGrid::contains(sf::Vector2f pos) {

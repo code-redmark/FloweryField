@@ -32,6 +32,8 @@ class Game {
     public:
     void GameLoop();   
     
+    void Loss();
+
     std::string FlagsToString(); 
     std::string ClockToString(); 
 

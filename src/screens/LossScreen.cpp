@@ -13,14 +13,12 @@ LossScreen::LossScreen(Game &game, FloweryGrid grid)
         sf::Vector2f WindowSize = game.GetWindowSize();
         sf::Vector2f WindowCenter = {WindowSize.x/2, WindowSize.y/2};
 
-        grid.setPosition({WindowCenter.x - grid.getSize().x/2, WindowCenter.y - grid.getSize().y/2});
+        this->gridPosition = {WindowSize.x * 0.01f, WindowCenter.y - grid.getSize().x/2};
 
         const float padding = WindowSize.x / 100;
         const float ButtonsLength = Menu.getSize().x + padding + PlayAgain.getSize().x;
         
-        YouLose.setPosition({WindowCenter.x - YouLose.getLocalBounds().size.x/2, WindowCenter.y - WindowCenter.y/2});
-
-        Menu.setPosition({WindowCenter.x - ButtonsLength/2, WindowCenter.y});
+        Menu.setPosition({(gridPosition.x + grid.getSize().x) * 1.3f, WindowCenter.y});
         Menu.MB1action = [&game](){ game.BackToMenuAction(); };
         Menu.MB2action = [](){};
 
@@ -28,6 +26,7 @@ LossScreen::LossScreen(Game &game, FloweryGrid grid)
         PlayAgain.MB1action = [&game](){ game.NewGameAction(); };
         PlayAgain.MB2action = [&game](){};
 
+        YouLose.setPosition({Menu.getPosition().x + ButtonsLength/2 - YouLose.getGlobalBounds().size.x/2, WindowCenter.y - WindowCenter.y/2});
     }
 
 void LossScreen::OnMB1(sf::RenderWindow &GameWindow) {
@@ -44,6 +43,11 @@ void LossScreen::Draw() {
     this->game.drawFloweryLabel(&this->PlayAgain);
     this->game.drawLabel(this->YouLose);
     this->game.drawFloweryGrid(this->grid);
+}
+
+void LossScreen::Reload(FloweryGrid newGrid) {
+    this->grid = newGrid;
+    this->grid.setPosition(this->gridPosition);
 }
 
 

@@ -35,11 +35,9 @@ void GameScreen::OnMB1(sf::RenderWindow &GameWindow) {
 
 void GameScreen::OnMB2(sf::RenderWindow &GameWindow) {
     sf::Vector2f MousePosition = {static_cast<float>(sf::Mouse::getPosition(GameWindow).x), static_cast<float>(sf::Mouse::getPosition(GameWindow).y)};
-
     if (this->GridUI.contains(MousePosition)) {
 
     }
-
 }
 
 void GameScreen::HandleEvents(sf::RenderWindow &GameWindow) {

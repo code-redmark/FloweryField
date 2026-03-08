@@ -39,6 +39,13 @@ class GameScreen : public FloweryScreen {
 class LossScreen : public FloweryScreen {
     private:
     FloweryGrid grid;
+
+    /**
+     * grid is continuosly moved in the screen's preferred position
+     * between GameScreen and LossScreen so we store it's position in the screen
+     */
+    sf::Vector2f gridPosition;
+
     sf::Text YouLose;
     FloweryButton Menu;
     FloweryButton PlayAgain;
@@ -48,6 +55,8 @@ class LossScreen : public FloweryScreen {
     public:
     LossScreen(Game &game, FloweryGrid grid);
     void Draw() override;
+
+    void Reload(FloweryGrid newGrid);
 
     friend Game;
 };
